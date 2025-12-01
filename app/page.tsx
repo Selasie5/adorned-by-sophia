@@ -97,7 +97,7 @@ export default function Home() {
         viewport={{ once: true }}
         custom={0.4}
         
-        className="tracking-[1rem] text-sm text-white sub mb-6">ADORNED BY SOPHIA</motion.span>
+        className=" tracking-[0.7rem] md:tracking-[1rem] text-xs md:text-sm text-white sub mb-6">ADORNED BY SOPHIA</motion.span>
  <motion.h1
  variants={listVariants}
  initial="hidden"
