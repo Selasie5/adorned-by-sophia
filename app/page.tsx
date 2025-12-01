@@ -36,12 +36,12 @@ export default function Home() {
     <main className="relative h-screen flex flex-col justify-center items-center bg-[url('/bg.jpg')] bg-cover bg-center bg-no-repeat">
 <div className="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent z-10"/>
       
-      {/* Audio Element */}
+     
       <audio ref={audioRef} loop>
         <source src="/ambient-music.mp3" type="audio/mpeg" />
       </audio>
 
-      {/* Music Controls */}
+      
       <div 
         className="absolute top-8 right-8 z-30"
         onMouseEnter={() => setShowControls(true)}
@@ -64,7 +64,7 @@ export default function Home() {
           )}
         </motion.button>
 
-        {/* Volume Control */}
+        
         {showControls && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
