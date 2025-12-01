@@ -104,7 +104,7 @@ export default function Home() {
  whileInView="visible"
  viewport={{ once: true }}
  custom={0.8}
- className="text-white text-6xl">For Beauty & For Glory</motion.h1>
+ className="text-white text-6xl md:text-7xl">For Beauty & For Glory</motion.h1>
         <motion.p
         variants={listVariants}
         initial="hidden"
