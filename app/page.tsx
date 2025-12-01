@@ -49,7 +49,7 @@ export default function Home() {
       >
         <motion.button
           onClick={togglePlay}
-          className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white rounded-full p-4 shadow-lg transition-all"
+          className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white rounded-full p-2 shadow-lg transition-all"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -89,7 +89,7 @@ export default function Home() {
           </motion.div>
         )}
       </div>
-      <div className="relative z-20 flex flex-col justify-center items-center gap-3">
+      <div className="relative z-20 flex flex-col justify-center items-center  text-center gap-3 p-5">
         <motion.span
         variants={listVariants}
         initial="hidden"
@@ -104,7 +104,7 @@ export default function Home() {
  whileInView="visible"
  viewport={{ once: true }}
  custom={0.8}
- className="text-white text-7xl">For Beauty & For Glory</motion.h1>
+ className="text-white text-6xl">For Beauty & For Glory</motion.h1>
         <motion.p
         variants={listVariants}
         initial="hidden"
