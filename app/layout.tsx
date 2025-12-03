@@ -6,7 +6,7 @@ import { Analytics } from "@vercel/analytics/next"
 import localFont from 'next/font/local';
 
 export const myLocalFont = localFont({
-  src: '/fonts/ppeditorialold-ultralightitalic.woff2',
+  src: '/../public/fonts/ppeditorialold-ultralight.woff2',
   variable: '--font-local',
   display: 'swap',
 })
