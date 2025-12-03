@@ -6,10 +6,11 @@ import { Analytics } from "@vercel/analytics/next"
 import localFont from 'next/font/local';
 
 export const myLocalFont = localFont({
-  src: '/../public/fonts/ppeditorialold-ultralight.woff2',
+  
+  src: '../ppeditorialold-ultralight.woff2',
   variable: '--font-local',
   display: 'swap',
-})
+});
 
 export const metadata: Metadata = {
   title: "Adorned by Sophia",
@@ -24,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${myLocalFont.variable} ${myLocalFont.variable} antialiased`}
+        className={`${myLocalFont.variable} antialiased`}
       >
         <Analytics/>
         {children}
