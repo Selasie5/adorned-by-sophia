@@ -1,17 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import localFont from 'next/font/local';
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+export const myLocalFont = localFont({
+  src: '/ppeditorialold-ultralight.woff2',
+  variable: '--font-local',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "Adorned by Sophia",
@@ -26,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${myLocalFont.variable} ${myLocalFont.variable} antialiased`}
       >
         <Analytics/>
         {children}
