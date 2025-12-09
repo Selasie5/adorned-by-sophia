@@ -57,10 +57,10 @@ export default function Home() {
           <source src="/ambient-music.mp3" type="audio/mpeg" />
         </audio>
 
-        {/* Loading screen overlay */}
+      
         {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
 
-        {/* Content - only visible after loading */}
+       
         {!isLoading && (
           <>
       <div 
