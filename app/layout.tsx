@@ -7,7 +7,7 @@ import localFont from 'next/font/local';
 
 export const myLocalFont = localFont({
   
-  src: '../ppeditorialold-ultralight.woff2',
+  src: '/ppeditorialold-ultralightitalic.woff2',
   variable: '--font-local',
   display: 'swap',
 });

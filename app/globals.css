@@ -1,10 +1,6 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: PPEditorial;
-  src: url('/fonts/ppeditorialold-ultralightitalic.otf') format('opentype');
-}
-@font-face {
   font-family: PPEditorialNormal;
   src: url('/fonts/PPEditorialNew-Light.ttf') format('truetype');
 }
@@ -14,7 +10,7 @@
 }
 
 body {
-  font-family: 'PPEditorial', sans-serif;
+  font-family: var(--font-local), sans-serif;
 }
 
 .sub{
