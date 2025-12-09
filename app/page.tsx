@@ -7,10 +7,15 @@ import LoadingScreen from "./components/LoadingScreen";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [showControls, setShowControls] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -35,11 +40,16 @@ export default function Home() {
     }
   };
 
+  
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <>
-      {/* Background image loads immediately, hidden behind loading screen */}
+     
       <main className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
-        {/* Optimized Background Image - loads in background */}
+       
         <Image
           src="/bg.jpg"
           alt="Background"
