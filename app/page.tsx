@@ -37,9 +37,11 @@ export default function Home() {
 
   return (
     <>
-      {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+      {isLoading ? (
+        <LoadingScreen onComplete={() => setIsLoading(false)} />
+      ) : (
       <main className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
-      {/* Optimized Background Image */}
+    =
       <Image
         src="/bg.jpg"
         alt="Background"
@@ -144,6 +146,7 @@ export default function Home() {
      
        
     </main>
+      )}
     </>
   );
 }
