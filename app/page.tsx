@@ -3,8 +3,10 @@ import {motion} from "framer-motion";
 import { listVariants } from "./components/Animation";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import LoadingScreen from "./components/LoadingScreen";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [showControls, setShowControls] = useState(false);
@@ -34,7 +36,9 @@ export default function Home() {
   };
 
   return (
-    <main className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
+    <>
+      {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+      <main className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
       {/* Optimized Background Image */}
       <Image
         src="/bg.jpg"
@@ -140,5 +144,6 @@ export default function Home() {
      
        
     </main>
+    </>
   );
 }
