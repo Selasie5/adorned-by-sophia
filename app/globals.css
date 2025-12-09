@@ -14,7 +14,7 @@ body {
 }
 
 .sub{
-  font-family: 'Matter', sans-serif;
+  font-family: var(--font-local-sub), sans-serif;
 }
 
 .nono{

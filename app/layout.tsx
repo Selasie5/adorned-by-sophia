@@ -13,6 +13,12 @@ export const myLocalFont = localFont({
   variable: '--font-local',
   display: 'swap',
 });
+export const myLocalSubFont = localFont({
+  
+  src: '/Matter-Regular.woff2',
+  variable: '--font-local-sub',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -82,7 +88,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${myLocalFont.variable} antialiased`}
+        className={`${myLocalFont.variable} ${myLocalSubFont.variable} antialiased`}
       >
         <StructuredData />
         <Analytics/>
