@@ -46,7 +46,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         ease: [0.76, 0, 0.24, 1]
       }}
     >
-      <div className="text-white text-6xl md:text-5xl font-light tracking-wider">
+      <div className="text-white text-3xl md:text-5xl font-light tracking-wider">
         {counter}%
       </div>
     </motion.div>
