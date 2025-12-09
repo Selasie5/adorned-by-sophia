@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
 import StructuredData from "./components/StructuredData";
+import CookieConsent from "./components/CookieConsent";
 
 import localFont from 'next/font/local';
 
@@ -85,6 +86,7 @@ export default function RootLayout({
       >
         <StructuredData />
         <Analytics/>
+        <CookieConsent />
         {children}
       </body>
     </html>
