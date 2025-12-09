@@ -2,6 +2,7 @@
 import {motion} from "framer-motion";
 import { listVariants } from "./components/Animation";
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -33,8 +34,20 @@ export default function Home() {
   };
 
   return (
-    <main className="relative h-screen flex flex-col justify-center items-center bg-[url('/bg.jpg')] bg-cover bg-center bg-no-repeat">
-<div className="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent z-10"/>
+    <main className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
+      {/* Optimized Background Image */}
+      <Image
+        src="/bg.jpg"
+        alt="Background"
+        fill
+        priority
+        quality={85}
+        sizes="100vw"
+        className="object-cover object-center"
+        placeholder="blur"
+        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"/>
       
      
       <audio ref={audioRef} loop>
