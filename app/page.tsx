@@ -37,30 +37,32 @@ export default function Home() {
 
   return (
     <>
-      {isLoading ? (
-        <LoadingScreen onComplete={() => setIsLoading(false)} />
-      ) : (
+      {/* Background image loads immediately, hidden behind loading screen */}
       <main className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
-    =
-      <Image
-        src="/bg.jpg"
-        alt="Background"
-        fill
-        priority
-        quality={85}
-        sizes="100vw"
-        className="object-cover object-center"
-        placeholder="blur"
-        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"/>
-      
-     
-      <audio ref={audioRef} loop>
-        <source src="/ambient-music.mp3" type="audio/mpeg" />
-      </audio>
+        {/* Optimized Background Image - loads in background */}
+        <Image
+          src="/bg.jpg"
+          alt="Background"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover object-center"
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"/>
+        
+        <audio ref={audioRef} loop>
+          <source src="/ambient-music.mp3" type="audio/mpeg" />
+        </audio>
 
-      
+        {/* Loading screen overlay */}
+        {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+
+        {/* Content - only visible after loading */}
+        {!isLoading && (
+          <>
       <div 
         className="absolute top-8 right-8 z-30"
         onMouseEnter={() => setShowControls(true)}
@@ -143,10 +145,10 @@ export default function Home() {
  className="text-white text-lg">...coming soon</motion.p>
         
        </div>
-     
+          </>
+        )}
        
     </main>
-      )}
     </>
   );
 }
