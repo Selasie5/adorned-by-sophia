@@ -24,8 +24,8 @@ export const resolvers = {
   },
 
   Mutation: {
-    login: async (_: any, { email, password, twoFactorCode }: any, { req }: any) => {
-      return AuthController.login(email, password, twoFactorCode, req);
+    login: async (_: any, { email, password, twoFactorCode }: any, context:any) => {
+      return AuthController.login(email, password, twoFactorCode, context);
     },
 
     refreshToken: async (_: any, { refreshToken }: { refreshToken: string }) => {

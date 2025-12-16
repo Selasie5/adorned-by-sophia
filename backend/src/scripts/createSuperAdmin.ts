@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const createSuperAdmin = async () => {
+export const createSuperAdmin = async () => {
   await connectDB();
 
   const exists = await Admin.findOne({ role: AdminRole.SUPER_ADMIN });
@@ -14,7 +14,7 @@ const createSuperAdmin = async () => {
   }
 
   await Admin.create({
-    email: 'support@adornedbysophia.com',
+    email: 'engineering@forgestudios.tech',
     password: 'ChangeMeNow123!',
     firstName: 'Super',
     lastName: 'Admin',
@@ -23,11 +23,11 @@ const createSuperAdmin = async () => {
   });
 
   console.log(' Super admin created');
-  console.log('Email: support@adornedbysophia.com');
+  console.log('Email: engineering@forgestudios.tech');
   console.log('Password: ChangeMeNow123!');
   console.log(' Change password immediately!');
   
   process.exit(0);
 };
 
-createSuperAdmin();
+// createSuperAdmin();

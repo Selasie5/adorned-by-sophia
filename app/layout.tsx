@@ -4,6 +4,7 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
 import StructuredData from "./components/StructuredData";
 import CookieConsent from "./components/CookieConsent";
+import Providers from "./providers/Providers";
 
 import localFont from 'next/font/local';
 
@@ -90,10 +91,12 @@ export default function RootLayout({
       <body
         className={`${myLocalFont.variable} ${myLocalSubFont.variable} antialiased`}
       >
-        <StructuredData />
-        <Analytics/>
-        <CookieConsent />
-        {children}
+        <Providers>
+          <StructuredData />
+          <Analytics/>
+          <CookieConsent />
+          {children}
+        </Providers>
       </body>
     </html>
   );

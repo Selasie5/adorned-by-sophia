@@ -11,21 +11,23 @@ import { connectRedis } from './config/redis.js';
 import { connectRabbitMQ } from './config/rabbitmq.js';
 import { authenticate } from './middleware/auth.js';
 import dotenv from 'dotenv';
+import { createSuperAdmin } from './scripts/createSuperAdmin';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100
-});
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000,
+//   max: 100
+// });
 
 async function startServer() {
   await connectDB();
   await connectRedis();
   await connectRabbitMQ();
+  // await createSuperAdmin();
 
   const server = new ApolloServer({
     typeDefs,
@@ -37,7 +39,7 @@ async function startServer() {
   app.use(helmet({ contentSecurityPolicy: process.env.NODE_ENV === 'production' }));
   app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
   app.use(express.json());
-  app.use(limiter);
+  // app.use(limiter);
 
   app.use('/graphql', expressMiddleware(server, {
     context: async ({ req }) => {

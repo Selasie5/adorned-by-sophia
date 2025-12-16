@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { Jwt } from 'jsonwebtoken';
 import speakeasy from 'speakeasy';
 import { Admin, AdminRole } from '../models/Admin.js';
 import { Session } from '../models/Session.js';
@@ -6,15 +6,16 @@ import { redisClient } from '../config/redis.js';
 import { publishToQueue } from '../config/rabbitmq.js';
 
 export class AuthController {
-  static async login(email: string, password: string, twoFactorCode: string | undefined, req: any) {
+  static async login(email: string, password: string, twoFactorCode: string | undefined, context: any) {
     const admin = await Admin.findOne({ email });
-    const ipAddress = req.ip || req.connection.remoteAddress;
-    const userAgent = req.headers['user-agent'] || 'unknown';
+    const req = context.req || context;
+    const ipAddress = req?.ip || req?.connection?.remoteAddress || req?.socket?.remoteAddress || 'unknown';
+    const userAgent = req?.headers?.['user-agent'] || req?.get?.('user-agent') || 'unknown';
 
     const logActivity = (status: string, reason?: string, adminId?: any) => {
       publishToQueue('auth_logs', {
         adminId, email, ipAddress, userAgent, status, reason, timestamp: new Date()
-      });
+      }).catch(err => console.error('Failed to log activity:', err));
     };
 
     if (!admin || !admin.isActive) {
@@ -103,7 +104,11 @@ export class AuthController {
 
   static async logout(user: any, token: string | undefined) {
     if (token) {
-      await redisClient.setEx(`blacklist:${token}`, 900, 'true');
+      try {
+        await redisClient.setEx(`blacklist:${token}`, 900, 'true');
+      } catch (error) {
+        console.warn('Redis unavailable, skipping token blacklist');
+      }
     }
 
     await Session.deleteMany({ adminId: user._id });
