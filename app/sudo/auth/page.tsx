@@ -30,7 +30,7 @@ const page = () => {
   return (
     
     <main className='flex flex-col justify-center items-center gap-4 h-screen'>
-      <div className='flex flex-col justify-center items-start w-1/4'>
+      <div className='flex flex-col justify-center items-start w-1/3'>
         <div className='flex justify-center items-center gap-2'>
  <h1 className='text-2xl font-semibold'>Adorned by Sophia</h1>
  <span className='text-xs bg-red-600 rounded-none p-1 font-mono text-white'>SUDO</span>
@@ -81,8 +81,12 @@ className='sub w-full mt-4 flex flex-col justify-center items-start gap-5'
       </div>
 
 
-      <button className='text-white text-sm px-4 py-3 rounded-md bg-teal-500 w-full mt-4'>
-        <span className='text-white text-sm font-medium'>Log in</span>
+      <button className='text-white text-sm px-4 py-3 rounded-md bg-teal-500 w-full mt-4 'type='submit' disabled={loading}>
+        <span className='text-white text-sm font-medium'>
+          {
+loading ? 'Logging in...' : 'Login'
+          }
+        </span>
       </button>
 
       </>
