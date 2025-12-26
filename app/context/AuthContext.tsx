@@ -1,75 +1,86 @@
+"use client";
+
 import { createContext, useEffect, useState } from "react";
 
-
-interface Admin{
-  email: string,
-  firstName: string,
-  lastName: string,
-  isActive: boolean
-  role: string
+interface Admin {
+  email: string;
+  firstName: string;
+  lastName: string;
+  isActive: boolean;
+  role: string;
 }
+
 interface AuthContextType {
   token: string | null;
   admin: Admin | null;
+  user: Admin | null;
+  isAuthenticated: boolean;
+  loading: boolean;
   setAuthData: (token: string, admin: Admin) => void;
   clearAuthData: () => void;
+  logout: () => void;
 }
-  
-
 
 export const AuthContext = createContext<AuthContextType>({
   token: null,
   admin: null,
+  user: null,
+  isAuthenticated: false,
+  loading: true,
   setAuthData: () => {},
-  clearAuthData: () => {}
-})
+  clearAuthData: () => {},
+  logout: () => {},
+});
 
-
-
-export const AuthProvider =({children}: {children: React.ReactNode})=>
-{
-  const [admin,setAdmin] = useState<Admin | null>(null);
-  const [token,setToken] = useState<string | null>(null);
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [admin, setAdmin] = useState<Admin | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const isAuthenticated = Boolean(token);
-  
-  const setAuthData = (token:string, admin:Admin)=>
-  {
+
+  const setAuthData = (token: string, admin: Admin) => {
     setToken(token);
     setAdmin(admin);
-    localStorage.setItem('sudo_auth_token', token);
-    localStorage.setItem('sudo_admin_data', JSON.stringify(admin));
-  }
+    localStorage.setItem("accessToken", token);
+    localStorage.setItem("sudo_admin_data", JSON.stringify(admin));
+  };
 
-  const clearAuthData =  ()=>
-  {
+  const clearAuthData = () => {
     setToken(null);
     setAdmin(null);
-    localStorage.removeItem('sudo_auth_token');
-    localStorage.removeItem('sudo_admin_data');
-  }
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("sudo_admin_data");
+  };
 
-  useEffect(()=>{
-    const storedToken = localStorage.getItem('sudo_auth_token');
-    const storedAdmin = localStorage.getItem('sudo_admin_data');
-    if(storedToken && storedAdmin)
-    {
+  const logout = () => {
+    clearAuthData();
+    window.location.href = "/sudo/auth";
+  };
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("accessToken");
+    const storedAdmin = localStorage.getItem("sudo_admin_data");
+    if (storedToken && storedAdmin) {
       setToken(storedToken);
       setAdmin(JSON.parse(storedAdmin));
     }
-  }, [])
-  return(
-<AuthContext.Provider value={token && admin ? {
-  token,
-  admin,
-  setAuthData,
-  clearAuthData
-} : {
-  token: null,
-  admin: null,
-  setAuthData,
-  clearAuthData
-}}>
-  {children}
-</AuthContext.Provider>
-  )
-}
+    setLoading(false);
+  }, []);
+
+  return (
+    <AuthContext.Provider
+      value={{
+        token,
+        admin,
+        user: admin,
+        isAuthenticated,
+        loading,
+        setAuthData,
+        clearAuthData,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
