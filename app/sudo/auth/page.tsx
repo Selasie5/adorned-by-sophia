@@ -6,6 +6,9 @@ import * as Yup from 'yup'
 import Link from 'next/link'
 import { useMutation } from '@apollo/client/react'
 import { SUDO_AUTH_LOGIN } from '@/app/apollo/sudo-auth'
+import { useAuth } from '@/app/hooks/useAuth'
+import { useRouter } from 'next/navigation'
+import { showToast } from '@/app/components/core/ui/toast'
 
 const page = () => {
 
@@ -15,12 +18,22 @@ const page = () => {
   })
 
 
+  const {setAuthData} = useAuth();
+  const navigate = useRouter();
+
   const [handleLogin ,{data, loading, error}] =  useMutation(SUDO_AUTH_LOGIN, {
-    onCompleted: (data) => {
-      console.log('Login successful:', data);
+    onCompleted: (data:any) => {
+      setAuthData(data.login.accessToken, {
+        email: data.login.admin.email,
+        firstName: data.login.admin.firstName,
+        lastName: data.login.admin.lastName,
+        isActive: data.login.admin.isActive,
+        role: data.login.admin.role
+      });
+      navigate.push('/sudo/dashboard/home');
     },
     onError: (error) => {
-      console.error('Login error:', error);
+      showToast(error.message, 'error');
     },
   })
 
@@ -76,12 +89,12 @@ className='sub w-full mt-4 flex flex-col justify-center items-start gap-5'
       required
       />
       <Link className='self-end' href='/sudo/auth/forgot-password'>
-        <span className='text-sm text-teal-600 hover:underline cursor-pointer'>Forgot Password?</span>
+        <span className='text-sm text-gray-600 hover:underline cursor-pointer'>Forgot Password?</span>
       </Link>
       </div>
 
 
-      <button className='text-white text-sm px-4 py-3 rounded-md bg-teal-500 w-full mt-4 'type='submit' disabled={loading}>
+      <button className='text-white text-sm px-4 py-3 rounded-md bg-red-500 w-full mt-4  hover:opacity-80' type='submit' disabled={loading}>
         <span className='text-white text-sm font-medium'>
           {
 loading ? 'Logging in...' : 'Login'

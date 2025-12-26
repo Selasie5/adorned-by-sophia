@@ -49,7 +49,7 @@ export const typeDefs = gql`
 
   type Mutation {
     login(email: String!, password: String!, twoFactorCode: String): AuthPayload!
-    refreshToken(refreshToken: String!): AuthPayload!
+    refreshToken(refreshToken: String): AuthPayload!
     logout: Boolean!
     
     createAdmin(

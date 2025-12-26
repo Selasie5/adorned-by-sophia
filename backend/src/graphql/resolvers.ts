@@ -4,6 +4,7 @@ import { AuthController } from '../controllers/AuthController.js';
 import { AdminController } from '../controllers/AdminController.js';
 import { TwoFactorController } from '../controllers/TwoFactorController.js';
 import { PasswordController } from '../controllers/PasswordController.js';
+import { isContext } from 'vm';
 
 export const resolvers = {
   Query: {
@@ -28,7 +29,10 @@ export const resolvers = {
       return AuthController.login(email, password, twoFactorCode, context);
     },
 
-    refreshToken: async (_: any, { refreshToken }: { refreshToken: string }) => {
+    refreshToken: async (_: any, __: any, context:any) => {
+      const refreshToken = context.req.cookies.refreshToken;
+      if(!refreshToken) throw new Error('No refresh token provided');
+
       return AuthController.refreshToken(refreshToken);
     },
 

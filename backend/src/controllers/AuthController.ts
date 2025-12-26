@@ -63,7 +63,12 @@ export class AuthController {
       process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key',
       { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d' } as jwt.SignOptions
     );
-
+      await context.res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000
+      });
     await Session.create({
       adminId: admin._id,
       refreshToken,
