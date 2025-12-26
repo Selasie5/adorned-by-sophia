@@ -4,6 +4,7 @@ import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import cookieParser from 'cookie-parser';
 import { typeDefs } from './graphql/schema';
 import { resolvers } from './graphql/resolvers';
 import { connectDB } from './config/database.js';
@@ -39,12 +40,13 @@ async function startServer() {
   app.use(helmet({ contentSecurityPolicy: process.env.NODE_ENV === 'production' }));
   app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
   app.use(express.json());
+  app.use(cookieParser());
   // app.use(limiter);
 
   app.use('/graphql', expressMiddleware(server, {
-    context: async ({ req }) => {
+    context: async ({ req, res }) => {
       const user = await authenticate(req);
-      return { user };
+      return { user, req, res };
     },
   }));
 
