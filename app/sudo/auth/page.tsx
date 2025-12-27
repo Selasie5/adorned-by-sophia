@@ -30,7 +30,7 @@ const page = () => {
         isActive: data.login.admin.isActive,
         role: data.login.admin.role
       });
-      navigate.push('/sudo/dashboard/home');
+      navigate.push('/sudo/dashboard/general/home');
     },
     onError: (error) => {
       showToast(error.message, 'error');

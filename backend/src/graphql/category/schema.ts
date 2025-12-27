@@ -5,9 +5,6 @@ export const categoryTypeDefs = gql`
     id: ID!
     name: String!
     description: String
-    slug: String!
-    image: String
-    isActive: Boolean!
     parentCategory: Category
     createdAt: String!
     updatedAt: String!
@@ -30,7 +27,6 @@ export const categoryTypeDefs = gql`
   input CreateCategoryInput {
     name: String!
     description: String
-    image: String
     parentCategory: ID
   }
 

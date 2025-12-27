@@ -185,7 +185,7 @@ const Sidebar = () => {
             <div key={index} className="w-full">
               <button
                 onClick={() => toggleDropdown(index)}
-                className={`w-full flex justify-between items-center gap-3 p-2.5 rounded-lg cursor-pointer transition-colors ${
+                className={`w-full flex justify-between items-center gap-3 px-4 py-3 rounded-md cursor-pointer transition-colors ${
                   openDropdowns[index]
                     ? "bg-black/30 text-white font-medium"
                     : "text-gray-50 hover:bg-black/30 font-extralight hover:text-white"
@@ -210,7 +210,7 @@ const Sidebar = () => {
                       <Link
                         key={refIndex}
                         href={refItem.to}
-                        className={`w-full flex justify-start items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors ${
+                        className={`w-full flex justify-start items-center gap-3 px-4 py-3 rounded-md cursor-pointer transition-colors ${
                           isActive(refItem.to)
                             ? "bg-black/30 text-white"
                             : "text-white hover:bg-black/30 hover:text-white"
@@ -236,7 +236,7 @@ const Sidebar = () => {
               <Link
                 key={index}
                 href={item.to}
-                className="w-full flex justify-start items-center gap-3 text-white p-2.5 cursor-pointer rounded-lg hover:bg-black/30 hover:text-white transition-colors"
+                className="w-full flex justify-start items-center gap-3 text-white px-4 py-3 cursor-pointer rounded-md hover:bg-black/30 hover:text-white transition-colors"
               >
                 <item.icon className="w-5 h-5" />
                 <span className="text-sm">{item.tag}</span>
@@ -245,7 +245,7 @@ const Sidebar = () => {
               <button
                 key={index}
                 onClick={item.onClick}
-                className="w-full flex justify-start items-center gap-3 text-white p-2.5 cursor-pointer rounded-lg hover:bg-black/30 hover:text-white transition-colors"
+                className="w-full flex justify-start items-center gap-3 text-white px-4 py-3 cursor-pointer rounded-md hover:bg-black/30 hover:text-white transition-colors"
               >
                 <item.icon className="w-5 h-5" />
                 <span className="text-sm">{item.tag}</span>

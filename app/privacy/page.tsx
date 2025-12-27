@@ -23,7 +23,7 @@ const Page = () => {
         </span>
           </div>
       
-        <div className='mt-6 flex flex-col gap-10 border border-dotted border-gray-300 rounded-lg p-5 bg-gray-50/20'>
+        <div className='mt-6 flex flex-col gap-10 border border-dotted border-gray-300 rounded-md p-5 bg-gray-50/20'>
           <section>
             <p className='sub text-[15px] text-gray-500 leading-6'>
               At Adorned by Sophia, we are committed to protecting your personal information and your right to privacy. This Privacy Policy explains what information we collect, how we use it, and the rights you have regarding your data when you visit 

@@ -1,5 +1,5 @@
 import { Category } from "../../models/categories";
-import { generateSlug } from "../../helpers/generateSlug";
+// import { generateSlug } from "../../helpers/generateSlug";
 
 
 export class CategoryController {
@@ -24,26 +24,7 @@ export class CategoryController {
     }
   }
 
-  static async getActiveCategories() {
-    try {
-      const categories = await Category.find({ isActive: true })
-        .populate('parentCategory')
-        .sort({ name: 1 });
-      return {
-        code: 200,
-        success: true,
-        message: "Active categories fetched successfully",
-        data: categories
-      };
-    } catch (error: any) {
-      return {
-        code: 500,
-        success: false,
-        message: error.message || "Failed to fetch active categories",
-        data: null
-      };
-    }
-  }
+ 
 
   static async getCategoryById(id: string) {
     try {
@@ -72,36 +53,11 @@ export class CategoryController {
     }
   }
 
-  static async getCategoryBySlug(slug: string) {
-    try {
-      const category = await Category.findOne({ slug, isActive: true }).populate('parentCategory');
-      if (!category) {
-        return {
-          code: 404,
-          success: false,
-          message: "Category not found",
-          data: null
-        };
-      }
-      return {
-        code: 200,
-        success: true,
-        message: "Category fetched successfully",
-        data: category
-      };
-    } catch (error: any) {
-      return {
-        code: 500,
-        success: false,
-        message: error.message || "Failed to fetch category",
-        data: null
-      };
-    }
-  }
+ 
 
   static async createCategory(context: any, _: any, args: any) {
     try {
-      const { name, description, image, parentCategory } = args.input;
+      const { name, description, parentCategory } = args.input;
       const role = context.user?.role;
 
       if (role !== 'SUPER_ADMIN' && role !== 'ADMIN') {
@@ -113,7 +69,7 @@ export class CategoryController {
         };
       }
 
-      // Check if category with same name exists
+      
       const existingCategory = await Category.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
       if (existingCategory) {
         return {
@@ -124,23 +80,16 @@ export class CategoryController {
         };
       }
 
-      const slug = generateSlug(name);
+    
 
-      // Check if slug already exists
-      let uniqueSlug = slug;
-      let counter = 1;
-      while (await Category.findOne({ slug: uniqueSlug })) {
-        uniqueSlug = `${slug}-${counter}`;
-        counter++;
-      }
+     
+      
 
       const category = await Category.create({
         name,
         description,
-        slug: uniqueSlug,
-        image,
         parentCategory: parentCategory || null,
-        isActive: true
+       
       });
 
       await category.populate('parentCategory');
@@ -164,7 +113,7 @@ export class CategoryController {
   static async updateCategory(context: any, _: any, args: any) {
     try {
       const { id, input } = args;
-      const { name, description, image, isActive, parentCategory } = input;
+      const { name, description, parentCategory } = input;
       const role = context.user?.role;
 
       if (role !== 'SUPER_ADMIN' && role !== 'ADMIN') {
@@ -186,7 +135,6 @@ export class CategoryController {
         };
       }
 
-      // If name is being updated, check for duplicates and update slug
       const updateData: any = {};
       
       if (name && name !== existingCategory.name) {
@@ -203,12 +151,9 @@ export class CategoryController {
           };
         }
         updateData.name = name;
-        updateData.slug = generateSlug(name);
       }
 
       if (description !== undefined) updateData.description = description;
-      if (image !== undefined) updateData.image = image;
-      if (isActive !== undefined) updateData.isActive = isActive;
       if (parentCategory !== undefined) updateData.parentCategory = parentCategory || null;
 
       const category = await Category.findByIdAndUpdate(
