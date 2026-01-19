@@ -184,7 +184,7 @@ const InventoryModal = ({
 
             <div className="flex flex-col gap-2">
               <span className="text-sm text-black font-medium">
-                Available Sizes <span className="text-red-800">*</span>
+                Available Sizes <span className="text-rose-800">*</span>
               </span>
               <div className="flex flex-wrap gap-2">
                 {AVAILABLE_SIZES.map((size) => {
@@ -202,8 +202,8 @@ const InventoryModal = ({
                       }}
                       className={`px-3 py-1.5 text-sm rounded-md border transition-all ${
                         isSelected
-                          ? 'bg-red-800 text-white border-red-800'
-                          : 'bg-white text-gray-700 border-gray-300 hover:border-red-800'
+                          ? 'bg-rose-800 text-white border-rose-800'
+                          : 'bg-white text-gray-700 border-gray-300 hover:border-rose-800'
                       } ${isViewMode ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}
                     >
                       {size}

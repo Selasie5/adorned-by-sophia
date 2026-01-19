@@ -46,7 +46,7 @@ function DataTable<T extends Record<string, any>>({
   if (error) {
     return (
       <div className="w-full h-64 flex items-center justify-center bg-white rounded-md border border-gray-200 sudo">
-        <p className="text-sm text-red-500">{error}</p>
+        <p className="text-sm text-rose-500">{error}</p>
       </div>
     );
   }

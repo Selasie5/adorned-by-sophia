@@ -57,7 +57,7 @@ export const ToastContainer: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <ExclamationCircleIcon className="w-5 h-5 text-red-600 inline-block mr-1" />
+                  <ExclamationCircleIcon className="w-5 h-5 text-rose-600 inline-block mr-1" />
                 </>
               )}</div>
               <div className="text-[13px] text-gray-700">{it.message}</div>

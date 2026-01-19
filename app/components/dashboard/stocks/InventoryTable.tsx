@@ -40,7 +40,7 @@ const InventoryTable = ({
   onAdjust,
 }: InventoryTableProps) => {
   const getStockStatus = (quantity: number) => {
-    if (quantity === 0) return { label: "Out of Stock", color: "bg-red-100 text-red-700" };
+    if (quantity === 0) return { label: "Out of Stock", color: "bg-rose-100 text-rose-700" };
     if (quantity <= 10) return { label: "Low Stock", color: "bg-yellow-100 text-yellow-700" };
     return { label: "In Stock", color: "bg-green-100 text-green-700" };
   };

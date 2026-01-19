@@ -201,7 +201,7 @@ const MultiImageUpload = ({
     <div className="flex flex-col gap-2">
       {label && (
         <label className="text-sm font-medium text-gray-700">
-          {label} {required && <span className="text-red-500">*</span>}
+          {label} {required && <span className="text-rose-500">*</span>}
         </label>
       )}
 
@@ -226,22 +226,22 @@ const MultiImageUpload = ({
           className={`
             relative border-2 border-dashed rounded-lg p-6 cursor-pointer transition-all duration-200
             ${isDragging 
-              ? 'border-red-500 bg-red-50' 
-              : 'border-gray-300 hover:border-red-400 hover:bg-gray-50'
+              ? 'border-rose-500 bg-rose-50' 
+              : 'border-gray-300 hover:border-rose-400 hover:bg-gray-50'
             }
           `}
         >
           <div className="flex flex-col items-center justify-center gap-2">
             {isUploading ? (
               <>
-                <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+                <div className="w-8 h-8 border-2 border-rose-500 border-t-transparent rounded-full animate-spin" />
                 <p className="text-sm text-gray-600">
                   Uploading images... {uploadProgress > 0 && `${uploadProgress}%`}
                 </p>
                 {uploadProgress > 0 && (
                   <div className="w-full max-w-xs bg-gray-200 rounded-full h-1.5">
                     <div
-                      className="bg-red-500 h-1.5 rounded-full transition-all duration-300"
+                      className="bg-rose-500 h-1.5 rounded-full transition-all duration-300"
                       style={{ width: `${uploadProgress}%` }}
                     />
                   </div>
@@ -297,7 +297,7 @@ const MultiImageUpload = ({
                       e.stopPropagation();
                       handleRemoveImage(index);
                     }}
-                    className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                    className="absolute top-1 right-1 p-1 bg-rose-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
                   >
                     <XMarkIcon className="w-4 h-4" />
                   </button>

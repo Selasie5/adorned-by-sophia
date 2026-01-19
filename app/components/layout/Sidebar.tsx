@@ -163,10 +163,10 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 bg-red-600 h-screen flex flex-col fixed left-0 top-0 ">
+    <div className="w-64 bg-rose-600 h-screen flex flex-col fixed left-0 top-0 ">
       {/* Logo Section */}
       <div className="flex-shrink-0 w-full">
-        <div className="w-full h-16 border-b border-red-300 flex items-center justify-start px-4">
+        <div className="w-full h-16 border-b border-rose-300 flex items-center justify-start px-4">
           <div className="flex justify-start items-center gap-2">
             <span className="text-base font-mono font-semibold text-white">STORE MANAGEMENT & POS CONSOLE</span>
             {/* <span className="text-xs bg-amber-500 rounded px-2 py-0.5 font-mono text-white">
@@ -256,7 +256,7 @@ const Sidebar = () => {
       </div>
 
       {/* User Profile Section */}
-      <div className="flex-shrink-0 w-full px-3 py-3  sudo border-t border-red-300 mt-auto">
+      <div className="flex-shrink-0 w-full px-3 py-3  sudo border-t border-rose-300 mt-auto">
         <div className="w-full flex justify-start items-center gap-3 p-2">
           <div className="w-5 h-5 p-4 bg-white rounded-full flex items-center justify-center">
             <span className="text-black font-normal">

@@ -83,7 +83,7 @@ const StockAdjustModal = ({ isOpen, onClose, inventory, type }: StockAdjustModal
           min="1"
           value={amount}
           onChange={(e) => setAmount(Math.max(1, parseInt(e.target.value) || 1))}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md text-center text-lg font-medium focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-center text-lg font-medium focus:outline-none focus:ring-2 focus:ring-rose-500"
         />
 
         <div className="flex items-center justify-between text-sm">

@@ -34,7 +34,7 @@ const SelectInput = ({
     <div className='flex flex-col justify-center items-start gap-1 w-full'>
    <span className='text-sm text-black font-medium'>
       {label}
-      {required && <span className="text-red-800">*</span>}
+      {required && <span className="text-rose-800">*</span>}
     </span>
     <div className="relative w-full">
       
@@ -42,7 +42,7 @@ const SelectInput = ({
         name={name}
         value={value}
         onChange={(e) => onChange?.(e.target.value)}
-        className={`w-full px-4 py-3 pr-10 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none sudo ${className}`}
+        className={`w-full px-4 py-3 pr-10 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent appearance-none sudo ${className}`}
       >
         <option value="" disabled>
           {placeholder}

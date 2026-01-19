@@ -46,7 +46,7 @@ const page = () => {
       <div className='flex flex-col justify-center items-start w-1/3'>
         <div className='flex justify-center items-center gap-2'>
  <h1 className='text-2xl font-semibold'>Adorned by Sophia</h1>
- <span className='text-xs bg-red-600 rounded-none p-1 font-mono text-white'>SUDO</span>
+ <span className='text-xs bg-rose-600 rounded-none p-1 font-mono text-white'>SUDO</span>
         </div>
         <p className='sub text-sm text-gray-600'>Kindly enter your credentials to proceed.</p>
 
@@ -94,7 +94,7 @@ className='sub w-full mt-4 flex flex-col justify-center items-start gap-5'
       </div>
 
 
-      <button className='text-white text-sm px-4 py-3 rounded-md bg-red-500 w-full mt-4  hover:opacity-80' type='submit' disabled={loading}>
+      <button className='text-white text-sm px-4 py-3 rounded-md bg-rose-500 w-full mt-4  hover:opacity-80' type='submit' disabled={loading}>
         <span className='text-white text-sm font-medium'>
           {
 loading ? 'Logging in...' : 'Login'

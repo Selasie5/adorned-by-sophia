@@ -23,7 +23,7 @@ const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={`py-3 px-4 rounded-[5px] text-sm cursor-pointer ${primary ? "bg-red-500 font-normal text-white" : ""} ${suspend ? "bg-red-500 font-normal text-white" : ""} ${secondary ? "border border-gray-300 text-gray-600 text-sm" : ""} ${disabled ? "bg-gray-300 border-gray-400 text-gray-700 cursor-not-allowed" : ""}`}
+      className={`py-3 px-4 rounded-[5px] text-sm cursor-pointer ${primary ? "bg-rose-500 font-normal text-white" : ""} ${suspend ? "bg-rose-500 font-normal text-white" : ""} ${secondary ? "border border-gray-300 text-gray-600 text-sm" : ""} ${disabled ? "bg-gray-300 border-gray-400 text-gray-700 cursor-not-allowed" : ""}`}
       disabled={disabled}
     >
       {label}
