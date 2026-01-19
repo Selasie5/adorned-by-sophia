@@ -169,6 +169,11 @@ const InventoryPage = () => {
     <div className="w-full flex flex-col h-full shrink-0">
       <Header
         title="Inventory Management"
+          breadCrumbs={[
+        { label: 'Dashboard', to: '/sudo/dashboard/general' },
+        { label: 'Stock', to: '/sudo/dashboard/stocks' },
+        { label: 'Inventory', to: '/sudo/dashboard/stocks/inventory' },
+      ]}
         actions={<Button label="Add Inventory" primary onClick={handleCreate} />}
       />
 
