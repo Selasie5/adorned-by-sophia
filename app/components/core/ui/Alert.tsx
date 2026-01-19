@@ -6,7 +6,7 @@ import Button from './button';
 interface AlertProps {
   isOpen: boolean;
   heading: string;
-  message: string;
+  message: React.ReactNode;
   onConfirm: () => void;
   onCancel: () => void;
   confirmLabel?: string;
