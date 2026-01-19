@@ -3,7 +3,7 @@ import { Product } from "../../models/products";
 export class ProductController {
   static async getAllProducts()
   {
-    const products = await Product.find().sort({ createdAt: -1 });
+    const products = await Product.find().populate('category').sort({ createdAt: -1 });
     return {
       code:200,
       success:true,
@@ -13,7 +13,7 @@ export class ProductController {
   }
 
   static async getProductById(id:string){
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate('category');
     return {
       code:200,
       success:true,
@@ -23,6 +23,10 @@ export class ProductController {
   }
 
   static async createProduct( context:any, _:any, args:any){
+   if (!context.user) {
+     throw new Error('Authentication required');
+   }
+   
    const {name, description, images, category, price} = args.input;
    const adminId = context.user._id;
    const role = context.user.role;
@@ -40,6 +44,10 @@ export class ProductController {
       createdBy: adminId,
       updatedBy: adminId
     });
+    
+    // Populate category before returning
+    await product.populate('category');
+    
     return {
       code:201,
       success:true,
@@ -48,7 +56,12 @@ export class ProductController {
     }
   }
   static async updateProduct(context:any, _:any, args:any){
-    const {id, name, description, images, category, price} = args.input;
+    if (!context.user) {
+      throw new Error('Authentication required');
+    }
+    
+    const {id} = args;
+    const {name, description, images, category, price} = args.input;
     const adminId = context.user._id;
     const role = context.user.role;
     if (role !== 'SUPER_ADMIN' && role !== 'ADMIN') {
@@ -61,7 +74,7 @@ export class ProductController {
       category,
       price,
       updatedBy: adminId
-    }, {new: true});
+    }, {new: true}).populate('category');
     return {
       code:200,
       success:true,
@@ -70,6 +83,10 @@ export class ProductController {
     }
   }
   static async deleteProduct(context:any, _:any, args:any){
+    if (!context.user) {
+      throw new Error('Authentication required');
+    }
+    
     const {id} = args;
     const role = context.user.role;
     if (role !== 'SUPER_ADMIN' && role !== 'ADMIN') {
@@ -84,5 +101,3 @@ export class ProductController {
     }
   }
 }
-
-  

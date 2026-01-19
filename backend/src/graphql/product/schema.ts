@@ -8,6 +8,8 @@ type Product {
   images: [String!]!
   category: Category!
   price: String!
+  createdAt: String!
+  updatedAt: String!
 }
 
 type ProductResponse {
@@ -39,7 +41,7 @@ type Query {
 
 type Mutation {
   createProduct(input: ProductInput!): ProductResponse!
-  updateProduct(input: ProductInput! id: ID!): ProductResponse!
+  updateProduct(input: ProductInput!, id: ID!): ProductResponse!
   deleteProduct(id: ID!): ProductResponse!
 }
 

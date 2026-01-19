@@ -34,14 +34,14 @@ const Modal = ({
     xl: "max-w-xl",
     "2xl": "max-w-2xl",
   };
-
+ 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center w-full bg-black/50 px-4 py-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center w-full bg-black/50 px-4 py-6 sudo">
       <div
         className={`bg-white w-full ${sizeClasses[size]} rounded-lg shadow-xl flex flex-col max-h-[90vh] ${className}`}
       >
       
-        <div className="flex items-start justify-between w-full px-5 pt-4 pb-4 border-b border-gray-200">
+        <div className="flex items-start justify-between w-full px-5 py-3 border-b border-gray-200">
           <div className="flex flex-col justify-center items-start">
             <h5 className="text-lg font-semibold text-gray-900">{title}</h5>
             {description && (

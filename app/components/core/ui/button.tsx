@@ -4,7 +4,7 @@
 interface ButtonProps {
   label: string;
   type?: "submit" | "reset" | "button" | undefined;
-  onClick: () => void;
+  onClick?: () => void;
   primary?: boolean;
   secondary?: boolean;
   suspend?: boolean;

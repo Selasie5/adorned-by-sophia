@@ -4,17 +4,18 @@ import React, { useState } from "react";
 import Header from "@/app/components/layout/Header";
 import { gql } from "@apollo/client";
 import { useQuery, useMutation } from "@apollo/client/react";
-import {
-  PlusIcon,
-  ArrowPathIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import SelectInput from "@/app/components/core/ui/SelectInput";
 import SearchInput from "@/app/components/core/ui/SearchInput";
 import CategoriesTable, { Category } from "@/app/components/dashboard/stocks/CategoriesTable";
 import Button from "@/app/components/core/ui/button";
-import { url } from "inspector";
+import Alert from "@/app/components/core/ui/Alert";
+import { useRouter, useSearchParams } from "next/navigation";
+import CategoryModal from "@/app/components/dashboard/stocks/CategoryModal";
+import { showToast } from "@/app/components/core/ui/toast";
 
-const GET_ALL_CATEGORIES = gql`
+
+export const GET_ALL_CATEGORIES = gql`
   query GetAllCategories {
     getAllCategories {
       code
@@ -24,9 +25,7 @@ const GET_ALL_CATEGORIES = gql`
         id
         name
         description
-        slug
-        image
-        isActive
+       
         createdAt
         updatedAt
       }
@@ -54,61 +53,105 @@ type GetAllCategoriesData = {
 };
 
 const CategoriesPage = () => {
-
   const [searchTerm, setSearchTerm] = useState("");
   const [searchBy, setSearchBy] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState("10");
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [modalMode, setModalMode] = useState<'create' | 'edit' | 'view'>('create');
+  const [deleteAlert, setDeleteAlert] = useState<{ isOpen: boolean; category: Category | null }>({
+    isOpen: false,
+    category: null,
+  });
+
+  const router = useRouter();
+  const params = useSearchParams();
 
   const { data, loading, error, refetch } = useQuery<GetAllCategoriesData>(GET_ALL_CATEGORIES);
-  const [deleteCategory] = useMutation(DELETE_CATEGORY, {
-    onCompleted: () => refetch(),
+  const [deleteCategory, { loading: deleteLoading }] = useMutation(DELETE_CATEGORY, {
+    onCompleted: (responseData) => {
+      const data = responseData as { deleteCategory: { success: boolean; message: string } };
+      if (data.deleteCategory.success) {
+        showToast('Category deleted successfully', 'success');
+        refetch();
+      } else {
+        showToast(data.deleteCategory.message, 'error');
+      }
+      setDeleteAlert({ isOpen: false, category: null });
+    },
+    onError: (error) => {
+      showToast(error.message, 'error');
+      setDeleteAlert({ isOpen: false, category: null });
+    },
   });
 
   const categories = data?.getAllCategories?.data || [];
 
   const filteredCategories = categories.filter((category) => {
     const matchesSearch = searchTerm
-      ? category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        category.slug.toLowerCase().includes(searchTerm.toLowerCase())
+      ? category.name.toLowerCase().includes(searchTerm.toLowerCase()) 
       : true;
 
-    const matchesStatus = statusFilter
-      ? statusFilter === "active"
-        ? category.isActive
-        : !category.isActive
-      : true;
-
-    return matchesSearch && matchesStatus;
+    return matchesSearch;
   });
 
-  const handleDelete = async (category: Category) => {
-    if (confirm(`Are you sure you want to delete "${category.name}"?`)) {
-      await deleteCategory({ variables: { id: category.id } });
+  const showModal =
+    params.get("modal") === "view" &&
+    (params.get("action") === "create-category" ||
+      params.get("action") === "edit-category" ||
+      params.get("action") === "view-category");
+
+  const handleDelete = (category: Category) => {
+    setDeleteAlert({ isOpen: true, category });
+  };
+
+  const confirmDelete = async () => {
+    if (deleteAlert.category) {
+      await deleteCategory({ variables: { id: deleteAlert.category.id } });
     }
   };
 
   const handleEdit = (category: Category) => {
-   
-    console.log("Edit category:", category);
+    setSelectedCategory(category);
+    setModalMode('edit');
+    const searchParams = new URLSearchParams(params.toString());
+    searchParams.set("modal", "view");
+    searchParams.set("action", "edit-category");
+    router.push(`?${searchParams.toString()}`);
   };
 
   const handleView = (category: Category) => {
-    
-    console.log("View category:", category);
+    setSelectedCategory(category);
+    setModalMode('view');
+    const searchParams = new URLSearchParams(params.toString());
+    searchParams.set("modal", "view");
+    searchParams.set("action", "view-category");
+    router.push(`?${searchParams.toString()}`);
+  };
+
+  const handleCreate = () => {
+    setSelectedCategory(null);
+    setModalMode('create');
+    const searchParams = new URLSearchParams(params.toString());
+    searchParams.set("modal", "view");
+    searchParams.set("action", "create-category");
+    router.push(`?${searchParams.toString()}`);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedCategory(null);
+    const searchParams = new URLSearchParams(params.toString());
+    searchParams.delete("modal");
+    searchParams.delete("action");
+    const query = searchParams.toString();
+    router.push(query ? `?${query}` : "/sudo/dashboard/stocks/categories");
   };
 
   const searchByOptions = [
     { id: "name", label: "Name", value: "name" },
-    { id: "slug", label: "Slug", value: "slug" },
+   
   ];
 
-  const statusOptions = [
-    { id: "all", label: "All Status", value: "" },
-    { id: "active", label: "Active", value: "active" },
-    { id: "inactive", label: "Inactive", value: "inactive" },
-  ];
-
+ 
   const itemsPerPageOptions = [
     { id: "10", label: "10 items per page", value: "10" },
     { id: "25", label: "25 items per page", value: "25" },
@@ -123,15 +166,33 @@ const CategoriesPage = () => {
 
 
   return (
+    <>
+      {/* Delete Alert */}
+      <Alert
+        isOpen={deleteAlert.isOpen}
+        heading="Delete Category"
+        message={`Are you sure you want to delete "${deleteAlert.category?.name}"? This action cannot be undone.`}
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteAlert({ isOpen: false, category: null })}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        confirmLoading={deleteLoading}
+        variant="danger"
+      />
+
+      {/* Category Modal */}
+      {showModal && (
+        <CategoryModal
+          isOpen={showModal}
+          onClose={handleCloseModal}
+          category={selectedCategory}
+          mode={modalMode}
+        />
+      )}
+
     <div className="flex flex-col h-full overflow-hidden">
   
-  {
-    urlParams.get("modal") === "view" && urlParams.get("action") === "create-category"  && (
-      <>
-      <h1>Modal is coming</h1>
-      </>
-    )
-  }
+  
       <div className="shrink-0">
         <Header
           title="Categories"
@@ -142,25 +203,11 @@ const CategoriesPage = () => {
           ]}
           actions={
             <div className="flex justify-end items-center gap-4">
-              <div className="w-40">
-                <SelectInput
-                  name="status"
-                  placeholder="Filter by Status"
-                  options={statusOptions}
-                  value={statusFilter}
-                  onChange={setStatusFilter}
-                />
-              </div>
+             
              <Button 
               label="+ Create new category"
               primary
-              onClick={()=>
-              {
-                urlParams.set("action","create-category")
-                urlParams.set("modal","view")
-                window.history.replaceState(null, "", `?${urlParams.toString()}`);
-              }
-              }
+              onClick={handleCreate}
              /> 
             </div>
           }
@@ -211,14 +258,7 @@ const CategoriesPage = () => {
           </div>
         </div>
 
-        {/* Results Count */}
-        {/* <div className="mb-4">
-          <p className="text-sm text-gray-600">
-            Showing <span className="font-medium">{filteredCategories.length}</span> of{" "}
-            <span className="font-medium">{categories.length}</span> categories
-          </p>
-        </div> */}
-
+        
         {/* Table */}
         <div className="flex-1 min-h-0">
           <CategoriesTable
@@ -232,6 +272,7 @@ const CategoriesPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

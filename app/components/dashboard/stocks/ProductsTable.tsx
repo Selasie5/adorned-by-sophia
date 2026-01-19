@@ -4,79 +4,92 @@ import React from "react";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import DataTable, { TableColumn } from "@/app/components/core/ui/DataTable";
 
-export interface Category {
+export interface Product {
   id: string;
   name: string;
-  description?: string;
-  slug: string;
-  image?: string;
-  isActive: boolean;
+  description: string;
+  images: string[];
+  category: {
+    id: string;
+    name: string;
+  };
+  price: string;
   createdAt: string;
   updatedAt: string;
 }
 
-interface CategoriesTableProps {
-  categories: Category[];
+interface ProductsTableProps {
+  products: Product[];
   loading?: boolean;
   error?: string;
   highlightedId?: string | null;
-  onEdit?: (category: Category) => void;
-  onDelete?: (category: Category) => void;
-  onView?: (category: Category) => void;
+  onEdit?: (product: Product) => void;
+  onDelete?: (product: Product) => void;
+  onView?: (product: Product) => void;
 }
 
-const CategoriesTable = ({
-  categories,
+const ProductsTable = ({
+  products,
   loading = false,
   error,
   highlightedId,
   onEdit,
   onDelete,
   onView,
-}: CategoriesTableProps) => {
-  
-
-  const columns: TableColumn<Category>[] = [
+}: ProductsTableProps) => {
+  const columns: TableColumn<Product>[] = [
     {
       key: "name",
-      header: "Category",
+      header: "Product",
       minWidth: "250px",
       render: (row) => (
         <div className="flex items-center gap-3">
-    
+          {row.images && row.images.length > 0 && (
+            <img
+              src={row.images[0]}
+              alt={row.name}
+              className="w-10 h-10 rounded-md object-cover"
+            />
+          )}
           <div className="flex flex-col">
             <span className="text-sm font-medium text-gray-900">{row.name}</span>
-            {/* <span className="text-xs text-gray-500 truncate max-w-[200px]">
+            <span className="text-xs text-gray-500 truncate max-w-[200px]">
               {row.description || "No description"}
-            </span> */}
+            </span>
           </div>
         </div>
       ),
     },
     {
-      key: "description",
-      header: "Description",
-      minWidth: "300px",
+      key: "category",
+      header: "Category",
+      minWidth: "150px",
       render: (row) => (
-        <span className="text-sm text-gray-600 truncate max-w-[250px]">
-          {row.description || "------------------"}
+        <span className="text-sm text-gray-600">
+          {row.category?.name || "Uncategorized"}
         </span>
       ),
     },
-    // {
-    //   key: "slug",
-    //   header: "Slug",
-    //   minWidth: "150px",
-    //   render: (row) => (
-    //     <span className="text-sm text-gray-600 font-mono">{row.slug}</span>
-    //   ),
-    // },
-    // {
-    //   key: "isActive",
-    //   header: "Status",
-    //   minWidth: "100px",
-    //   render: (row) => getStatusBadge(row.isActive),
-    // },
+    {
+      key: "price",
+      header: "Price",
+      minWidth: "120px",
+      render: (row) => (
+        <span className="text-sm font-medium text-gray-900">
+          GHS {row.price}
+        </span>
+      ),
+    },
+    {
+      key: "images",
+      header: "Images",
+      minWidth: "100px",
+      render: (row) => (
+        <span className="text-sm text-gray-600">
+          {row.images?.length || 0} image(s)
+        </span>
+      ),
+    },
     {
       key: "createdAt",
       header: "Created",
@@ -98,7 +111,7 @@ const CategoriesTable = ({
               e.stopPropagation();
               onView?.(row);
             }}
-            className="p-2 text-gray-500  hover:bg-gray-100 rounded-md transition-colors"
+            className="p-2 text-gray-500 hover:bg-gray-100 rounded-md transition-colors"
           >
             <EyeIcon className="w-4 h-4" />
           </button>
@@ -128,14 +141,14 @@ const CategoriesTable = ({
   return (
     <DataTable
       columns={columns}
-      data={categories}
+      data={products}
       loading={loading}
       error={error}
-      emptyMessage="No categories found. Create your first category!"
+      emptyMessage="No products found. Create your first product!"
       highlightedId={highlightedId}
       idKey="id"
     />
   );
 };
 
-export default CategoriesTable;
+export default ProductsTable;

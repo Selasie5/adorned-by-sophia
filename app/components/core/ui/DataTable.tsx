@@ -61,7 +61,7 @@ function DataTable<T extends Record<string, any>>({
   }
 
   return (
-    <div className="w-full h-full min-h-0">
+    <div className="w-full h-full min-h-0 sudo">
       <div className="w-full max-h-[calc(100vh-300px)] overflow-x-auto overflow-y-auto border border-gray-200 rounded-md no-scrollbar">
         <table className="w-full border-collapse bg-white">
           <thead className="sticky top-0 z-10">
