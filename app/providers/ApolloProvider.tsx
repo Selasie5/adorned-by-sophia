@@ -42,7 +42,7 @@ const resolvedPendingRequests =()=>
 
 const refreshToken = async(client:any)=>
 {
-  const {data} = client.mutation({mutation: REFRESH_TOKEN});
+  const {data} = await client.mutate({mutation: REFRESH_TOKEN});
   localStorage.setItem('accessToken', data.refreshToken.accessToken);
   return data.refreshToken.accessToken;
 }
@@ -116,7 +116,7 @@ const errorLink = onError((error: any) => {
 });
 
 const client = new ApolloClient({
-  link: from([errorLink, authLink, httpLink, refreshLink]),
+  link: from([errorLink, authLink,refreshLink,httpLink]),
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {

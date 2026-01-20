@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request } from 'express';
+import { GraphQLError } from 'graphql';
 import { redisClient } from '../config/redis.js';
 import { Admin } from '../models/Admin.js';
 
@@ -29,12 +30,18 @@ export const authenticate = async (req: Request) => {
 };
 
 export const requireAuth = (user: any) => {
-  if (!user) throw new Error('Authentication required');
+  if (!user) {
+    throw new GraphQLError('Authentication required', {
+      extensions: { code: 'UNAUTHENTICATED' },
+    });
+  }
 };
 
 export const requireRole = (user: any, roles: string[]) => {
   requireAuth(user);
   if (!roles.includes(user.role)) {
-    throw new Error('Insufficient permissions');
+    throw new GraphQLError('Insufficient permissions', {
+      extensions: { code: 'FORBIDDEN' },
+    });
   }
 };
