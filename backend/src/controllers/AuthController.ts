@@ -4,6 +4,7 @@ import { Admin, AdminRole } from '../models/Admin.js';
 import { Session } from '../models/Session.js';
 import { redisClient } from '../config/redis.js';
 import { publishToQueue } from '../config/rabbitmq.js';
+import { LoginActivity } from '../models/LoginActivity.js';
 
 export class AuthController {
   static async login(email: string, password: string, twoFactorCode: string | undefined, context: any) {
@@ -69,6 +70,15 @@ export class AuthController {
         sameSite: 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000
       });
+       await LoginActivity.insertOne({
+      adminId: admin._id,
+      email: admin.email,
+      ipAddress,
+      userAgent,
+      reason: 'Sudo Admin Console access',
+      status: 'SUCCESS',
+      timestamp: new Date()
+    })
     await Session.create({
       adminId: admin._id,
       refreshToken,
@@ -76,7 +86,7 @@ export class AuthController {
       userAgent,
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     });
-
+   
     admin.lastLogin = new Date();
     await admin.save();
 
