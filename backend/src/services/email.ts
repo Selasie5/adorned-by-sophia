@@ -60,9 +60,9 @@ export const sendEmail = async ({ to, subject, html }: { to: string; subject: st
     
     console.log(`✅ Email sent to ${to}`);
   } catch (error: any) {
-    console.error('❌ Email error:', error.message);
-    // Log email details for debugging
-    console.log('📧 Failed to send email:');
+    console.error(' Email error:', error.message);
+    
+    console.log(' Failed to send email:');
     console.log(`To: ${to}`);
     console.log(`Subject: ${subject}`);
   }

@@ -13,6 +13,7 @@ import { connectRabbitMQ } from './config/rabbitmq.js';
 import { authenticate } from './middleware/auth.js';
 import dotenv from 'dotenv';
 import { createSuperAdmin } from './scripts/createSuperAdmin';
+import { startEmailConsumer } from './workers/emailWorker';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ async function startServer() {
   await connectDB();
   await connectRedis();
   await connectRabbitMQ();
+  // await startEmailConsumer();
   // await createSuperAdmin();
 
   const server = new ApolloServer({
