@@ -21,6 +21,7 @@ const generateEmailHTML = (template: string, data: any) => {
       <h2>Welcome ${d.name}!</h2>
       <p>Your admin account has been created.</p>
       <p>Email: ${d.email}</p>
+      <p>Password: ${d.password}</p>
       <p>Please set up your password and 2FA.</p>
     `
   };

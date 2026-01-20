@@ -15,14 +15,12 @@ import { Admin } from "./AdminsTable";
 const CREATE_ADMIN = gql`
   mutation CreateAdmin(
     $email: String!
-    $password: String!
     $firstName: String!
     $lastName: String!
     $role: AdminRole!
   ) {
     createAdmin(
       email: $email
-      password: $password
       firstName: $firstName
       lastName: $lastName
       role: $role
@@ -126,26 +124,6 @@ const AdminModal = ({
           .email("Please enter a valid email address"),
       otherwise: (schema) => schema.optional(),
     }),
-    password: Yup.string().when([], {
-      is: () => isCreateMode,
-      then: (schema) =>
-        schema
-          .required("Password is required")
-          .min(8, "Password must be at least 8 characters")
-          .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-            "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-          ),
-      otherwise: (schema) => schema.optional(),
-    }),
-    confirmPassword: Yup.string().when([], {
-      is: () => isCreateMode,
-      then: (schema) =>
-        schema
-          .required("Please confirm your password")
-          .oneOf([Yup.ref("password")], "Passwords must match"),
-      otherwise: (schema) => schema.optional(),
-    }),
     role: Yup.string().required("Role is required"),
     isActive: Yup.string().when([], {
       is: () => !isCreateMode,
@@ -217,7 +195,6 @@ const AdminModal = ({
       createAdmin({
         variables: {
           email: values.email,
-          password: values.password,
           firstName: values.firstName,
           lastName: values.lastName,
           role: values.role,
@@ -230,8 +207,6 @@ const AdminModal = ({
     firstName: admin?.firstName || "",
     lastName: admin?.lastName || "",
     email: admin?.email || "",
-    password: "",
-    confirmPassword: "",
     role: admin?.role || "",
     isActive: admin?.isActive ? "true" : "false",
   };
@@ -324,37 +299,6 @@ const AdminModal = ({
                 required
                 disabled={!isCreateMode}
               />
-               <Input
-                  label="Password"
-                  name="password"
-                  type="password"
-                  placeholder="Enter password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.password && formik.errors.password
-                      ? formik.errors.password
-                      : undefined
-                  }
-                  required
-                />
-
-                <Input
-                  label="Confirm Password"
-                  name="confirmPassword"
-                  type="password"
-                  placeholder="Confirm password"
-                  value={formik.values.confirmPassword}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.confirmPassword && formik.errors.confirmPassword
-                      ? formik.errors.confirmPassword
-                      : undefined
-                  }
-                  required
-                />
                  <SelectInput
               label="Role"
               name="role"

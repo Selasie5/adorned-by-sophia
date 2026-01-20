@@ -14,6 +14,7 @@ import { authenticate } from './middleware/auth.js';
 import dotenv from 'dotenv';
 import { createSuperAdmin } from './scripts/createSuperAdmin';
 import { startEmailConsumer } from './workers/emailWorker';
+import { startAuthLogConsumer } from './workers/authLogWorker';
 
 dotenv.config();
 
@@ -29,7 +30,8 @@ async function startServer() {
   await connectDB();
   await connectRedis();
   await connectRabbitMQ();
-  // await startEmailConsumer();
+  await startEmailConsumer();
+  await startAuthLogConsumer();
   // await createSuperAdmin();
 
   const server = new ApolloServer({

@@ -7,7 +7,7 @@ export const startAuthLogConsumer = async () => {
   await channel.consume('auth_logs', async (msg) => {
     if (msg) {
       const data = JSON.parse(msg.content.toString());
-      await LoginActivity.create(data);
+      await LoginActivity.insertOne(data);
       channel.ack(msg);
     }
   });

@@ -70,15 +70,7 @@ export class AuthController {
         sameSite: 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000
       });
-       await LoginActivity.insertOne({
-      adminId: admin._id,
-      email: admin.email,
-      ipAddress,
-      userAgent,
-      reason: 'Sudo Admin Console access',
-      status: 'SUCCESS',
-      timestamp: new Date()
-    })
+     
     await Session.create({
       adminId: admin._id,
       refreshToken,

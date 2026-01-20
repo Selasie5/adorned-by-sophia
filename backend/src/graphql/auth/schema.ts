@@ -54,7 +54,6 @@ export const authTypeDefs = gql`
     
     createAdmin(
       email: String!
-      password: String!
       firstName: String!
       lastName: String!
       role: AdminRole!

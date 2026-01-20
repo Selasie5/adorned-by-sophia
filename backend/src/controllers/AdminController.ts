@@ -1,6 +1,7 @@
 import { Admin, AdminRole } from '../models/Admin.js';
 import { LoginActivity } from '../models/LoginActivity.js';
 import { publishToQueue } from '../config/rabbitmq.js';
+import { genPassword } from '../helpers/passwordGen.js';
 
 export class AdminController {
   static async getAdmins(role?: AdminRole) {
@@ -12,8 +13,10 @@ export class AdminController {
     const exists = await Admin.findOne({ email: data.email });
     if (exists) throw new Error('Email already exists');
 
+    const plainPassword = await genPassword();
     const admin = await Admin.create({
       ...data,
+      password: plainPassword,
       createdBy
     });
 
@@ -21,7 +24,7 @@ export class AdminController {
       to: data.email,
       subject: 'Admin Account Created',
       template: 'admin_created',
-      data: { name: data.firstName, email: data.email }
+      data: { name: data.firstName, email: data.email, password: plainPassword }
     });
 
     return admin;
