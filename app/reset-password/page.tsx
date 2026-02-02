@@ -76,7 +76,6 @@ const page = () => {
           {(formik) => (
             <>
               <Input
-                name="newPassword"
                 label="New Password"
                 type="password"
                 placeholder="Enter your new password"
