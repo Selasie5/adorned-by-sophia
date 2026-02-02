@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -20,3 +21,47 @@ body {
 .nono{
   font-family: 'PPEditorialNormal', sans-serif;
 }
+
+.sudo{
+  font-family: "Manrope", sans-serif;
+}
+
+/* Hide scrollbar for sidebar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+
+.loader {
+    position: relative;
+    width:  48px;
+    height: 48px;
+    background: #de3500;
+    transform: rotateX(65deg) rotate(45deg);
+    /* transform: perspective(200px) rotateX(65deg) rotate(45deg);  */
+    color: #fff;
+    animation: layers1 0.5s linear infinite alternate;
+  }
+  .loader:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    animation: layerTr 0.5s linear infinite alternate;
+  }
+
+  @keyframes layers1 {
+    0% { box-shadow: 0px 0px 0 0px  }
+   90% , 100% { box-shadow: 20px 20px 0 -4px  }
+  }
+  @keyframes layerTr {
+    0% { transform:  translate(0, 0) scale(1) }
+    100% {  transform: translate(-25px, -25px) scale(1) }
+  }
+      
