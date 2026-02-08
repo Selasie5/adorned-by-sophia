@@ -1,9 +1,8 @@
 "use client";
-import React, { useEffect } from "react";
-import { useAuth } from "../hooks/useAuth";
+import React from "react";
 
-const page = () => {
+const SudoPage = () => {
   return <div></div>;
 };
 
-export default page;
+export default SudoPage;

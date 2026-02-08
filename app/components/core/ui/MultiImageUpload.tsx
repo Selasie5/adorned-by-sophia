@@ -131,7 +131,7 @@ const MultiImageUpload = ({
       if (uploadedUrls.length > 0) {
         onChange([...images, ...uploadedUrls]);
       }
-    } catch (error) {
+    } catch {
       showError('Error uploading images');
     } finally {
       setIsUploading(false);

@@ -144,7 +144,6 @@ const CategoriesPage = () => {
 
 
 
-  const urlParams = new URLSearchParams();
  
 
 

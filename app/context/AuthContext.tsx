@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 interface Admin {
   email: string;
@@ -33,9 +33,19 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [admin, setAdmin] = useState<Admin | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [admin, setAdmin] = useState<Admin | null>(() => {
+    if (typeof window === 'undefined') return null;
+    const storedAdmin = localStorage.getItem("sudo_admin_data");
+    return storedAdmin ? JSON.parse(storedAdmin) : null;
+  });
+  const [token, setToken] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    return localStorage.getItem("accessToken");
+  });
+  const [_loading] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return false;
+  });
   const isAuthenticated = Boolean(token);
 
   const setAuthData = (token: string, admin: Admin) => {
@@ -57,16 +67,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     window.location.href = "/sudo/auth";
   };
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("accessToken");
-    const storedAdmin = localStorage.getItem("sudo_admin_data");
-    if (storedToken && storedAdmin) {
-      setToken(storedToken);
-      setAdmin(JSON.parse(storedAdmin));
-    }
-    setLoading(false);
-  }, []);
-
   return (
     <AuthContext.Provider
       value={{
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         admin,
         user: admin,
         isAuthenticated,
-        loading,
+        loading: _loading,
         setAuthData,
         clearAuthData,
         logout,

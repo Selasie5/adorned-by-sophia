@@ -2,7 +2,7 @@
 
 import React from "react";
 import Loader from "./loader";
-import { DocumentArrowDownIcon, DocumentPlusIcon, FolderPlusIcon } from "@heroicons/react/24/outline";
+import { FolderPlusIcon } from "@heroicons/react/24/outline";
 
 export interface TableColumn<T> {
   key: string;
@@ -18,18 +18,18 @@ interface DataTableProps<T> {
   error?: string;
   emptyMessage?: string;
   highlightedId?: string | number | null;
-  idKey?: keyof T;
+  idKey?: string;
   onRowClick?: (row: T) => void;
 }
 
-function DataTable<T extends Record<string, any>>({
+function DataTable<T extends object>({
   columns,
   data,
   loading = false,
   error,
   emptyMessage = "No data found.",
   highlightedId,
-  idKey = "id" as keyof T,
+  idKey = "id",
   onRowClick,
 }: DataTableProps<T>) {
   if (loading) {
@@ -79,10 +79,12 @@ function DataTable<T extends Record<string, any>>({
           </thead>
           <tbody className="bg-white">
             {data.map((row, rowIndex) => {
-              const isHighlighted = highlightedId !== null && row[idKey] === highlightedId;
+              const rowRecord = row as Record<string, unknown>;
+              const isHighlighted = highlightedId !== null && rowRecord[idKey] === highlightedId;
+              const rowKey = rowRecord[idKey] as React.Key | null | undefined;
               return (
                 <tr
-                  key={row[idKey] || rowIndex}
+                  key={rowKey ?? rowIndex}
                   onClick={() => onRowClick?.(row)}
                   className={`border-b border-gray-200 ${
                     isHighlighted
@@ -96,7 +98,7 @@ function DataTable<T extends Record<string, any>>({
                         column.render(row, rowIndex)
                       ) : (
                         <span className="text-sm text-gray-900">
-                          {row[column.key]}
+                          {String(rowRecord[column.key] ?? '')}
                         </span>
                       )}
                     </td>

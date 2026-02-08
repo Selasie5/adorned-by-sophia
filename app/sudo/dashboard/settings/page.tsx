@@ -4,9 +4,8 @@ import React, { useContext } from "react";
 import Header from "@/app/components/layout/Header";
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
-import { ArrowPathIcon, UsersIcon, ShieldCheckIcon, ClockIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon, UsersIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
 import { AuthContext } from "@/app/context/AuthContext";
-import Link from "next/link";
 import LoginActivityTable, { LoginActivityItem } from "@/app/components/dashboard/settings/LoginActivityTable";
 
 const GET_LOGIN_ACTIVITY = gql`
@@ -29,7 +28,6 @@ type GetLoginActivityData = {
 
 const SettingsPage = () => {
   const { admin } = useContext(AuthContext);
-  const isSuperAdmin = admin?.role === "SUPER_ADMIN";
 
   const { data, loading, error, refetch } = useQuery<GetLoginActivityData>(
     GET_LOGIN_ACTIVITY,
@@ -40,7 +38,8 @@ const SettingsPage = () => {
 
   const activities = data?.getLoginActivity || [];
 
-  const settingsLinks = [
+  // Settings links to be used later
+  const _settingsLinks = [
     {
       title: "Admin Management",
       description: "Manage admins, create new accounts, and assign roles",
@@ -57,7 +56,8 @@ const SettingsPage = () => {
     },
   ];
 
-  const accessibleLinks = settingsLinks.filter((link) =>
+  // Filtered links for current admin
+  const _accessibleLinks = _settingsLinks.filter((link) =>
     link.roles.includes(admin?.role || "")
   );
 

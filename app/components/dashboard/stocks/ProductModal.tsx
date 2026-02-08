@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as Yup from "yup";
 import Modal from '../../core/ui/Modal';
 import Form from '../../core/ui/form';
@@ -94,12 +94,15 @@ const ProductModal = ({
   product = null,
   mode = 'create',
 }: ProductModalProps) => {
-  const [imageUrls, setImageUrls] = useState<string[]>(product?.images || []);
+  const [imageUrls, setImageUrls] = useState<string[]>(() => product?.images || []);
 
-  
-  useEffect(() => {
+  // Reset images when product changes
+  const productImagesKey = JSON.stringify(product?.images);
+  const [prevImagesKey, setPrevImagesKey] = useState(productImagesKey);
+  if (productImagesKey !== prevImagesKey) {
+    setPrevImagesKey(productImagesKey);
     setImageUrls(product?.images || []);
-  }, [product]);
+  }
 
   const productValidationSchema = Yup.object().shape({
     name: Yup.string()

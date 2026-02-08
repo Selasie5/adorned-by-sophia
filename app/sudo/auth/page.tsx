@@ -10,7 +10,20 @@ import { useAuth } from '@/app/hooks/useAuth'
 import { useRouter } from 'next/navigation'
 import { showToast } from '@/app/components/core/ui/toast'
 
-const page = () => {
+interface LoginResponse {
+  login: {
+    accessToken: string;
+    admin: {
+      email: string;
+      firstName: string;
+      lastName: string;
+      isActive: boolean;
+      role: string;
+    };
+  };
+}
+
+const SudoAuthPage = () => {
 
   const authValidationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -21,8 +34,8 @@ const page = () => {
   const {setAuthData} = useAuth();
   const navigate = useRouter();
 
-  const [handleLogin ,{data, loading, error}] =  useMutation(SUDO_AUTH_LOGIN, {
-    onCompleted: (data:any) => {
+  const [handleLogin, { loading }] = useMutation<LoginResponse>(SUDO_AUTH_LOGIN, {
+    onCompleted: (data) => {
       setAuthData(data.login.accessToken, {
         email: data.login.admin.email,
         firstName: data.login.admin.firstName,
@@ -114,4 +127,4 @@ loading ? 'Logging in...' : 'Login'
   )
 }
 
-export default page
+export default SudoAuthPage

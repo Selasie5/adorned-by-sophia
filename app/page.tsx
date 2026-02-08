@@ -7,15 +7,11 @@ import LoadingScreen from "./components/LoadingScreen";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isMounted, setIsMounted] = useState(false);
+  const [_isMounted] = useState(() => typeof window !== 'undefined');
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [showControls, setShowControls] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -41,7 +37,7 @@ export default function Home() {
   };
 
   
-  if (!isMounted) {
+  if (!_isMounted) {
     return null;
   }
 

@@ -1,17 +1,20 @@
-import React, { forwardRef } from 'react'
+import React from 'react'
 import {useFormik,type FormikValues, Form as FormikForm, FormikProvider} from "formik"
 import * as Yup from "yup"
 
 interface FormProps<T extends FormikValues>{
   initialValues:T,
-  validationSchema:Yup.ObjectSchema<T>,
-  onSubmit:(values:T)=>void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  validationSchema:Yup.ObjectSchema<any>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSubmit:(values:any)=>void
   children:(formik:ReturnType<typeof useFormik<T>>)=>React.ReactNode
   className?:string
 }
-const Form = forwardRef<HTMLFormElement, FormProps<any>>(({onSubmit, validationSchema, initialValues, className="", children}, ref) => {
 
-const formik = useFormik({
+function Form<T extends FormikValues>({onSubmit, validationSchema, initialValues, className="", children}: FormProps<T>) {
+
+const formik = useFormik<T>({
   initialValues,
   validationSchema,
   onSubmit,
@@ -23,7 +26,6 @@ const formik = useFormik({
     <FormikProvider 
     value={formik}>
       <FormikForm
-      ref={ref}
       className={className}
       onSubmit={formik.handleSubmit}
       noValidate
@@ -33,6 +35,5 @@ const formik = useFormik({
     </FormikProvider>
   )
 }
-);
-Form.displayName = 'Form'
+
 export default Form

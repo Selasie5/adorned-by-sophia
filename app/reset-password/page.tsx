@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Form from "../components/core/ui/form";
 import Input from "../components/core/ui/input";
 import { useMutation } from "@apollo/client/react";
@@ -8,13 +8,14 @@ import * as Yup from "yup";
 import { FingerPrintIcon } from "@heroicons/react/24/solid";
 import { gql } from "@apollo/client";
 
-const page = () => {
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    setToken(searchParams.get("token"));
-  }, []);
+const ResetPasswordPage = () => {
+  const [token] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      return searchParams.get("token");
+    }
+    return null;
+  });
 
   const validationSchema = Yup.object().shape({
     newPassword: Yup.string()
@@ -102,4 +103,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ResetPasswordPage;

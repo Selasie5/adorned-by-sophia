@@ -30,7 +30,7 @@ interface AdminsTableProps {
 }
 
 const getRoleBadge = (role: Admin["role"]) => {
-  const roleStyles = {
+  const roleStyles: Record<Admin["role"], string> = {
     SUPER_ADMIN: "bg-purple-100 text-purple-700 border-purple-200",
     ADMIN: "bg-blue-100 text-blue-700 border-blue-200",
     MANAGER: "bg-green-100 text-green-700 border-green-200",
@@ -44,7 +44,7 @@ const getRoleBadge = (role: Admin["role"]) => {
 
   return (
     <span
-      className={`px-2 py-1 text-xs font-medium rounded-sm text-gray-500 uppercase border bg-gray-100 border-gray-200`}
+      className={`px-2 py-1 text-xs font-medium rounded-sm uppercase border ${roleStyles[role]}`}
     >
       {roleLabels[role]}
     </span>

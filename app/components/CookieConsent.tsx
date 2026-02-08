@@ -5,11 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [_isMounted] = useState(() => {
+    
+    return typeof window !== 'undefined';
+  });
 
   useEffect(() => {
-    
-    setIsMounted(true);
     
    
     const consent = localStorage.getItem("cookie-consent");
@@ -34,7 +35,7 @@ export default function CookieConsent() {
   };
 
   
-  if (!isMounted) {
+  if (!_isMounted) {
     return null;
   }
 
@@ -56,7 +57,7 @@ export default function CookieConsent() {
                 </h3>
                 <p className="text-sm text-gray-600 leading-relaxed sub">
                   We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
-                  By clicking "Accept", you consent to our use of cookies.{" "}
+                  By clicking &quot;Accept&quot;, you consent to our use of cookies.{" "}
                   <a 
                     href="/privacy" 
                     className="text-black underline hover:text-gray-700 transition-colors"

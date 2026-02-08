@@ -196,7 +196,7 @@ const CategoryModal = ({
         initialValues={{
           name: category?.name || '',
           description: category?.description || '',
-          parentCategory: (category as any)?.parentCategory?.id || '',
+          parentCategory: category?.parentCategory?.id || '',
         }}
         onSubmit={(values) => {
           const input = {

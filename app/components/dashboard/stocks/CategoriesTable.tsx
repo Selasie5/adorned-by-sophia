@@ -13,6 +13,10 @@ export interface Category {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+  parentCategory?: {
+    id: string;
+    name: string;
+  };
 }
 
 interface CategoriesTableProps {

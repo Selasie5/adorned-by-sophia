@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from '../../core/ui/Modal';
 import Button from '../../core/ui/button';
 import { useMutation } from '@apollo/client/react';
@@ -25,11 +25,16 @@ interface StockAdjustModalProps {
 }
 
 const StockAdjustModal = ({ isOpen, onClose, inventory, type }: StockAdjustModalProps) => {
+  // Reset amount when modal opens
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
   const [amount, setAmount] = useState(1);
-
-  useEffect(() => {
-    if (isOpen) setAmount(1);
-  }, [isOpen]);
+  
+  if (isOpen && !prevIsOpen) {
+    setAmount(1);
+  }
+  if (isOpen !== prevIsOpen) {
+    setPrevIsOpen(isOpen);
+  }
 
   const [adjustStock, { loading }] = useMutation(ADJUST_STOCK, {
     onCompleted: (responseData) => {
