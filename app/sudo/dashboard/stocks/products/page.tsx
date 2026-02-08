@@ -13,29 +13,7 @@ import Alert from "@/app/components/core/ui/Alert";
 import { useRouter, useSearchParams } from "next/navigation";
 import ProductModal from "@/app/components/dashboard/stocks/ProductModal";
 import { showToast } from "@/app/components/core/ui/toast";
-
-export const GET_ALL_PRODUCTS = gql`
-  query GetAllProducts {
-    getAllProducts {
-      code
-      success
-      message
-      data {
-        id
-        name
-        description
-        images
-        category {
-          id
-          name
-        }
-        price
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
+import { GET_ALL_PRODUCTS } from "@/app/apollo/queries";
 
 const DELETE_PRODUCT = gql`
   mutation DeleteProduct($id: ID!) {

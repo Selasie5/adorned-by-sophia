@@ -9,8 +9,7 @@ import MultiImageUpload from '../../core/ui/MultiImageUpload';
 import { useMutation, useQuery } from '@apollo/client/react';
 import { gql } from '@apollo/client';
 import { showToast } from '../../core/ui/toast';
-import { GET_ALL_CATEGORIES } from '@/app/sudo/dashboard/stocks/categories/page';
-import { GET_ALL_PRODUCTS } from '@/app/sudo/dashboard/stocks/products/page';
+import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS } from '@/app/apollo/queries';
 import { Product } from './ProductsTable';
 
 const CREATE_PRODUCT = gql`

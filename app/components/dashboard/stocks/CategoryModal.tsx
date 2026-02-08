@@ -7,7 +7,7 @@ import SelectInput from '../../core/ui/SelectInput';
 import Button from '../../core/ui/button';
 import { useMutation, useQuery } from '@apollo/client/react';
 import { gql } from '@apollo/client';
-import { GET_ALL_CATEGORIES } from '@/app/sudo/dashboard/stocks/categories/page';
+import { GET_ALL_CATEGORIES } from '@/app/apollo/queries';
 import { showToast } from '../../core/ui/toast';
 import { Category } from './CategoriesTable';
 

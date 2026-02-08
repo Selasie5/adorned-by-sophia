@@ -4,7 +4,7 @@ import Button from '../../core/ui/button';
 import { useMutation } from '@apollo/client/react';
 import { gql } from '@apollo/client';
 import { showToast } from '../../core/ui/toast';
-import { GET_ALL_INVENTORY } from '@/app/sudo/dashboard/stocks/inventory/page';
+import { GET_ALL_INVENTORY } from '@/app/apollo/queries';
 import { InventoryItem } from './InventoryTable';
 
 const ADJUST_STOCK = gql`

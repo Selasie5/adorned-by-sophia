@@ -8,8 +8,7 @@ import Button from '../../core/ui/button';
 import { useMutation, useQuery } from '@apollo/client/react';
 import { gql } from '@apollo/client';
 import { showToast } from '../../core/ui/toast';
-import { GET_ALL_PRODUCTS } from '@/app/sudo/dashboard/stocks/products/page';
-import { GET_ALL_INVENTORY } from '@/app/sudo/dashboard/stocks/inventory/page';
+import { GET_ALL_PRODUCTS, GET_ALL_INVENTORY } from '@/app/apollo/queries';
 import { InventoryItem } from './InventoryTable';
 
 const CREATE_INVENTORY = gql`

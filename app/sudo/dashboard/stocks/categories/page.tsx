@@ -13,25 +13,8 @@ import Alert from "@/app/components/core/ui/Alert";
 import { useRouter, useSearchParams } from "next/navigation";
 import CategoryModal from "@/app/components/dashboard/stocks/CategoryModal";
 import { showToast } from "@/app/components/core/ui/toast";
+import { GET_ALL_CATEGORIES } from "@/app/apollo/queries";
 
-
-export const GET_ALL_CATEGORIES = gql`
-  query GetAllCategories {
-    getAllCategories {
-      code
-      success
-      message
-      data {
-        id
-        name
-        description
-       
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
 
 const DELETE_CATEGORY = gql`
   mutation DeleteCategory($id: ID!) {

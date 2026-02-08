@@ -14,31 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import InventoryModal from "@/app/components/dashboard/stocks/InventoryModal";
 import StockAdjustModal from "@/app/components/dashboard/stocks/StockAdjustModal";
 import { showToast } from "@/app/components/core/ui/toast";
-
-export const GET_ALL_INVENTORY = gql`
-  query GetAllInventory {
-    getAllInventory {
-      code
-      success
-      message
-      data {
-        id
-        product {
-          id
-          name
-          images
-          price
-        }
-        sizes
-        quantity
-        createdBy { id name email }
-        updatedBy { id name email }
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
+import { GET_ALL_INVENTORY } from "@/app/apollo/queries";
 
 const DELETE_INVENTORY = gql`
   mutation DeleteInventory($id: ID!) {
