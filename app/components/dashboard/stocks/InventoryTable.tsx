@@ -53,6 +53,7 @@ const InventoryTable = ({
       render: (row) => (
         <div className="flex items-center gap-3">
           {row.product?.images?.[0] && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={row.product.images[0]}
               alt={row.product.name}

@@ -9,7 +9,7 @@ type InputProps = {
   value?:string;
   onChange?:(e:React.ChangeEvent<HTMLInputElement>)=>void;
   onBlur?:(e:React.ChangeEvent<HTMLInputElement>)=>void;
-  error?:any
+  error?:string
   required?:boolean
   ref?:React.RefObject<HTMLInputElement>
 }

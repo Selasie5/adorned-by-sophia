@@ -247,7 +247,7 @@ You can unsubscribe anytime by clicking “Unsubscribe” in any email.         
 To make a request contact us at <Link href="mailto:support@adornedbysophia.com" className='border-b border-gray-500 hover:border-gray-600 hover:text-gray-600'>support@adornedbysophia.com</Link>          </p>
           </section>
           <section className=''>
-            <h2 className='text-lg font-[650] text-gray-600 mb-3 sub '>Children's Privacy</h2>
+            <h2 className='text-lg font-[650] text-gray-600 mb-3 sub '>Children&apos;s Privacy</h2>
             <p className='sub text-[15px] text-gray-500 leading-6'>
 Our Website is not intended for children under 16, and we do not knowingly collect data from minors.
             </p>
@@ -294,7 +294,7 @@ While no online service is 100% secure, we take all reasonable measures to prote
           <section className=''>
             <h2 className='text-lg font-[650] text-gray-600 mb-3 sub '>Changes to Privacy Policy</h2>
             <p className='sub text-[15px] text-gray-500 leading-6'>
-We may update this Privacy Policy periodically. Changes will be posted on this page with an updated "Last Updated" date. We encourage you to review this policy regularly.
+We may update this Privacy Policy periodically. Changes will be posted on this page with an updated &quot;Last Updated&quot; date. We encourage you to review this policy regularly.
               </p>
             {/* <ul className='list-disc list-inside mt-1 space-y-1 text-gray-500 sub text-[15px]'>
               <li>HTTPS encryption</li>

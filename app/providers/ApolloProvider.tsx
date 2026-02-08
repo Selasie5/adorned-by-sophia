@@ -1,7 +1,7 @@
 'use client';
 
 import { ApolloClient, InMemoryCache, HttpLink, from, gql, Observable } from '@apollo/client';
-import { ApolloProvider, useMutation } from '@apollo/client/react';
+import { ApolloProvider } from '@apollo/client/react';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
 
@@ -24,8 +24,6 @@ const REFRESH_TOKEN = gql`mutation RefreshToken($refreshToken: String!) {
   }
 }`
 
-// const [refreshToken] = useMutation(REFRESH_TOKEN);
-
 const httpLink = new HttpLink({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:4000/graphql',
   credentials: 'include',
@@ -40,56 +38,15 @@ const resolvedPendingRequests =()=>
   pendingRequests=[];
 }
 
-const refreshToken = async(client:any)=>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const doRefreshToken = async(apolloClient: any)=>
 {
-  const {data} = await client.mutate({mutation: REFRESH_TOKEN});
+  const {data} = await apolloClient.mutate({mutation: REFRESH_TOKEN});
   localStorage.setItem('accessToken', data.refreshToken.accessToken);
   return data.refreshToken.accessToken;
 }
-const refreshLink = onError(({ graphQLErrors, networkError, operation, forward }: any) => {
-  if (graphQLErrors) {
-    for (let err of graphQLErrors) {
-      if (err.extensions?.code === 'UNAUTHENTICATED') {
-        if (!isRefreshing) {
-          isRefreshing = true;
-          return new Observable(observer => {
-            refreshToken(client)
-              .then(newAccessToken => {
-                operation.setContext(({ headers = {} }) => ({
-                  headers: {
-                    ...headers,
-                    authorization: `Bearer ${newAccessToken}`,
-                  },
-                }));
-                resolvedPendingRequests();
-                observer.next(forward(operation));
-                observer.complete();
-              })
-              .catch(error => {
-                observer.error(error);
-              })
-              .finally(() => {
-                isRefreshing = false;
-              });
-          });
-        } else {
-          return new Observable(observer => {
-            pendingRequests.push(() => {
-              observer.next(forward(operation));
-              observer.complete();
-            });
-          });
-        }
-      }
-    }
-  }
-  if (networkError) {
-    console.error(`[Network error]: ${networkError}`);
-  }
-});
 
 const authLink = setContext((_, { headers }) => {
-
   if (typeof window !== 'undefined') {
     const token = localStorage.getItem('accessToken');
     return {
@@ -102,16 +59,71 @@ const authLink = setContext((_, { headers }) => {
   return { headers };
 });
 
-const errorLink = onError((error: any) => {
-  if (error.graphQLErrors) {
-    error.graphQLErrors.forEach(({ message, locations, path }: any) =>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const refreshLink = onError((errorHandler: any) => {
+  const { graphQLErrors, networkError, operation, forward } = errorHandler;
+  if (graphQLErrors) {
+    for (const err of graphQLErrors) {
+      if (err.extensions?.code === 'UNAUTHENTICATED') {
+        if (!isRefreshing) {
+          isRefreshing = true;
+          return new Observable(observer => {
+            doRefreshToken(client)
+              .then(newAccessToken => {
+                operation.setContext(({ headers = {} }: { headers: Record<string, string> }) => ({
+                  headers: {
+                    ...headers,
+                    authorization: `Bearer ${newAccessToken}`,
+                  },
+                }));
+                resolvedPendingRequests();
+                const subscriber = {
+                  next: observer.next.bind(observer),
+                  error: observer.error.bind(observer),
+                  complete: observer.complete.bind(observer),
+                };
+                forward(operation).subscribe(subscriber);
+              })
+              .catch(error => {
+                observer.error(error);
+              })
+              .finally(() => {
+                isRefreshing = false;
+              });
+          });
+        } else {
+          return new Observable(observer => {
+            pendingRequests.push(() => {
+              const subscriber = {
+                next: observer.next.bind(observer),
+                error: observer.error.bind(observer),
+                complete: observer.complete.bind(observer),
+              };
+              forward(operation).subscribe(subscriber);
+            });
+          });
+        }
+      }
+    }
+  }
+  if (networkError) {
+    console.error(`[Network error]: ${networkError}`);
+  }
+});
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const errorLink = onError((errorHandler: any) => {
+  const { graphQLErrors, networkError } = errorHandler;
+  if (graphQLErrors) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    graphQLErrors.forEach((gqlError: any) =>
       console.error(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        `[GraphQL error]: Message: ${gqlError.message}, Location: ${gqlError.locations}, Path: ${gqlError.path}`
       )
     );
   }
-  if (error.networkError) {
-    console.error(`[Network error]: ${error.networkError}`);
+  if (networkError) {
+    console.error(`[Network error]: ${networkError}`);
   }
 });
 

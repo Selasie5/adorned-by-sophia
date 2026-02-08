@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as Yup from "yup";
 import Modal from '../../core/ui/Modal';
 import Form from '../../core/ui/form';
@@ -175,7 +175,7 @@ const InventoryModal = ({
               label="Quantity"
               name="quantity"
               placeholder="Enter quantity"
-              value={values.quantity}
+              value={String(values.quantity)}
               onChange={(e) => setFieldValue('quantity', e.target.value)}
               disabled={isViewMode}
               required

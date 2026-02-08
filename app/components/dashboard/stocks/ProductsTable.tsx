@@ -45,6 +45,7 @@ const ProductsTable = ({
       render: (row) => (
         <div className="flex items-center gap-3">
           {row.images && row.images.length > 0 && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={row.images[0]}
               alt={row.name}

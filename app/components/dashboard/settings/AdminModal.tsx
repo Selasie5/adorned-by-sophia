@@ -180,6 +180,7 @@ const AdminModal = ({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = (values: any) => {
     if (mode === "edit" && admin) {
       updateAdmin({
@@ -209,6 +210,8 @@ const AdminModal = ({
     email: admin?.email || "",
     role: admin?.role || "",
     isActive: admin?.isActive ? "true" : "false",
+    password: "",
+    confirmPassword: "",
   };
 
   return (

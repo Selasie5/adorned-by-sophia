@@ -6,7 +6,7 @@ import { gql } from '@apollo/client'
 import React from 'react'
 import * as Yup from 'yup'
 
-const page = () => {
+const ForgotPasswordPage = () => {
   const emailValidationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email address').required('Email is required'),
   });
@@ -17,12 +17,12 @@ const page = () => {
 }
   `
   
-  const [handleSubmit, {data, loading, error}] = useMutation(REQUEST_PASSWORD_RESET, {
-    onCompleted: (data) => {
-      console.log('Password reset link sent:', data);
+  const [handleSubmit, { loading }] = useMutation(REQUEST_PASSWORD_RESET, {
+    onCompleted: (responseData) => {
+      console.log('Password reset link sent:', responseData);
     },
-    onError: (error) => {
-      console.error('Error sending password reset link:', error);
+    onError: (err) => {
+      console.error('Error sending password reset link:', err);
     }
   }
   )
@@ -74,4 +74,4 @@ const page = () => {
   )
 }
 
-export default page
+export default ForgotPasswordPage

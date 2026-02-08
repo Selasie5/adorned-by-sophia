@@ -18,7 +18,7 @@ export function useCreateProduct() {
   const queryClient = useQueryClient();
   
   return useTanstackMutation({
-    mutationFn: async (product: any) => {
+    mutationFn: async (product: Record<string, unknown>) => {
       const response = await fetch('/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
