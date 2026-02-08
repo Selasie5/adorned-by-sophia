@@ -56,7 +56,8 @@ const SettingsPage = () => {
     },
   ];
 
-  // Filtered links for current admin
+  // Filtered links for current admin - will be used when settings grid is enabled
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const _accessibleLinks = _settingsLinks.filter((link) =>
     link.roles.includes(admin?.role || "")
   );

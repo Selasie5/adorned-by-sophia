@@ -278,6 +278,7 @@ const MultiImageUpload = ({
                 key={index}
                 className="relative group aspect-square rounded-lg overflow-hidden border border-gray-200 bg-gray-50"
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={url}
                   alt={`Image ${index + 1}`}
