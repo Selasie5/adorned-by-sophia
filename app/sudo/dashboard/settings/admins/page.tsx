@@ -231,7 +231,7 @@ const AdminsPage = () => {
             <div className="flex justify-end items-center gap-2">
               <button
                 onClick={() => refetch()}
-                className="p-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 transition-colors"
+                className="p-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
               >
                 <ArrowPathIcon className="h-4 w-4" />
               </button>

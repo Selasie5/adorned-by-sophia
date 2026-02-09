@@ -29,9 +29,9 @@ const Input:React.FC<InputProps> = ({type,placeholder,value,onChange,onBlur ,nam
     onChange={onChange}
     onBlur={onBlur}
     min={type === 'date' ? new Date().toISOString().split('T')[0] : undefined}
-    className={`w-full px-4 py-3 border text-xs border-gray-300 rounded-md  outline-none focus:border-gray-800 focus:ring-0 ${error ? 'border-rose-500' : ''}`}
+    className={`w-full px-4 py-3 border text-xs border-gray-300 rounded-md  outline-none focus:border-gray-800 focus:ring-0 ${error ? 'border-green-500' : ''}`}
     />
-    {error && <span className="text-rose-500 text-xs mt-1">{error}</span>}
+    {error && <span className="text-green-500 text-xs mt-1">{error}</span>}
   </div>
    
   )

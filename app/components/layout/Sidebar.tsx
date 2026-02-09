@@ -15,7 +15,9 @@ import {
   ClipboardDocumentListIcon,
   BellIcon,
   ChartPieIcon,
-  QuestionMarkCircleIcon,
+  TruckIcon,
+  TicketIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/react/24/outline";
 import { useAuth } from "@/app/hooks/useAuth";
 import { ChartBarSquareIcon } from "@heroicons/react/24/outline";
@@ -49,11 +51,11 @@ const Sidebar = () => {
 
   const primaryMenuItems: MenuItem[] = [
     {
-      mainTag: "General",
+      mainTag: "Dashboard",
       icon: HomeIcon,
       refs: [
         {
-          tag: "Dashboard",
+          tag: "Overview",
           icon: ChartBarSquareIcon,
           to: "/sudo/dashboard/general/home",
         },
@@ -65,7 +67,18 @@ const Sidebar = () => {
       ],
     },
     {
-      mainTag: "Stocks",
+      mainTag: "Orders",
+      icon: ClipboardDocumentListIcon,
+      refs: [
+        {
+          tag: "All Orders",
+          icon: ClipboardDocumentListIcon,
+          to: "/sudo/dashboard/orders",
+        },
+      ],
+    },
+    {
+      mainTag: "Products",
       icon: ShoppingBagIcon,
       refs: [
         {
@@ -74,7 +87,7 @@ const Sidebar = () => {
           to: "/sudo/dashboard/stocks/categories",
         },
         {
-          tag: "Products",
+          tag: "All Products",
           icon: CubeIcon,
           to: "/sudo/dashboard/stocks/products",
         },
@@ -86,54 +99,44 @@ const Sidebar = () => {
       ],
     },
     {
-      mainTag: "Orders",
-      icon: ClipboardDocumentListIcon,
-      refs: [
-        {
-          tag: "Order Tracking",
-          icon: ClipboardDocumentListIcon,
-          to: "/sudo/dashboard/orders/tracking",
-        },
-        {
-          tag: "Complaints",
-          icon: QuestionMarkCircleIcon,
-          to: "/sudo/dashboard/orders/complaints",
-        }
-      ],
-    },
-    {
       mainTag: "Customers",
       icon: UsersIcon,
       refs: [
         {
           tag: "All Customers",
           icon: UsersIcon,
-          to: "/sudo/dashboard/customers/all",
-        },
-        {
-          tag: "Feedback",
-          icon: UsersIcon,
-          to: "/sudo/dashboard/customers/feedback",
+          to: "/sudo/dashboard/customers",
         },
       ],
     },
-    // {
-    //   mainTag: "Media",
-    //   icon: PhotoIcon,
-    //   refs: [
-    //     {
-    //       tag: "Media Library",
-    //       icon: PhotoIcon,
-    //       to: "/sudo/dashboard/media",
-    //     },
-    //   ],
-    // },
+    {
+      mainTag: "Promotions",
+      icon: TicketIcon,
+      refs: [
+        {
+          tag: "Discount Codes",
+          icon: TicketIcon,
+          to: "/sudo/dashboard/promotions",
+        },
+      ],
+    },
+    {
+      mainTag: "Shipping",
+      icon: TruckIcon,
+      refs: [
+        {
+          tag: "Shipping Rates",
+          icon: CurrencyDollarIcon,
+          to: "/sudo/dashboard/shipping",
+        },
+      ],
+    },
     {
       mainTag: "Settings",
       icon: Cog6ToothIcon,
       refs: [
         {
-          tag: "General",
+          tag: "Store Settings",
           icon: Cog6ToothIcon,
           to: "/sudo/dashboard/settings",
         },
@@ -160,10 +163,10 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 bg-rose-600 h-screen flex flex-col fixed left-0 top-0 ">
+    <div className="w-64 bg-green-700 h-screen flex flex-col fixed left-0 top-0 ">
       {/* Logo Section */}
       <div className="flex-shrink-0 w-full">
-        <div className="w-full h-16 border-b border-rose-300 flex items-center justify-start px-4">
+        <div className="w-full h-16 border-b border-green-300 flex items-center justify-start px-4">
           <div className="flex justify-start items-center gap-2">
             <span className="text-base font-mono font-semibold text-white">STORE MANAGEMENT & POS CONSOLE</span>
             {/* <span className="text-xs bg-amber-500 rounded px-2 py-0.5 font-mono text-white">
@@ -253,7 +256,7 @@ const Sidebar = () => {
       </div>
 
       {/* User Profile Section */}
-      <div className="flex-shrink-0 w-full px-3 py-3  sudo border-t border-rose-300 mt-auto">
+      <div className="flex-shrink-0 w-full px-3 py-3  sudo border-t border-green-300 mt-auto">
         <div className="w-full flex justify-start items-center gap-3 p-2">
           <div className="w-5 h-5 p-4 bg-white rounded-full flex items-center justify-center">
             <span className="text-black font-normal">

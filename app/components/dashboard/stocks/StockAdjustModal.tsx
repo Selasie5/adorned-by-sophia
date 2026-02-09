@@ -88,12 +88,12 @@ const StockAdjustModal = ({ isOpen, onClose, inventory, type }: StockAdjustModal
           min="1"
           value={amount}
           onChange={(e) => setAmount(Math.max(1, parseInt(e.target.value) || 1))}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md text-center text-lg font-medium focus:outline-none focus:ring-2 focus:ring-rose-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-center text-lg font-medium focus:outline-none focus:ring-2 focus:ring-green-500"
         />
 
         <div className="flex items-center justify-between text-sm">
           <span className="text-gray-500">After</span>
-          <span className={`font-medium ${isIncrease ? 'text-green-600' : 'text-orange-600'}`}>
+          <span className={`font-medium ${isIncrease ? 'text-green-700' : 'text-orange-600'}`}>
             {newStock}
           </span>
         </div>

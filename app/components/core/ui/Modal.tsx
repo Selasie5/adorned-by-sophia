@@ -50,7 +50,7 @@ const Modal = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-rose-500 transition-colors"
+            className="p-1 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
           >
             <XMarkIcon className="w-5 h-5 text-gray-400" />
           </button>

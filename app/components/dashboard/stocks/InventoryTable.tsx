@@ -40,7 +40,7 @@ const InventoryTable = ({
   onAdjust,
 }: InventoryTableProps) => {
   const getStockStatus = (quantity: number) => {
-    if (quantity === 0) return { label: "Out of Stock", color: "bg-rose-100 text-rose-700" };
+    if (quantity === 0) return { label: "Out of Stock", color: "bg-green-100 text-rose-700" };
     if (quantity <= 10) return { label: "Low Stock", color: "bg-yellow-100 text-yellow-700" };
     return { label: "In Stock", color: "bg-green-100 text-green-700" };
   };
@@ -125,7 +125,7 @@ const InventoryTable = ({
         <div className="flex items-center gap-1">
           <button
             onClick={() => onAdjust?.(row, 'increase')}
-            className="p-1.5 rounded-md hover:bg-green-50 text-green-600 transition-colors"
+            className="p-1.5 rounded-md hover:bg-green-50 text-green-700 transition-colors"
             title="Increase Stock"
           >
             <ArrowUpIcon className="w-4 h-4" />

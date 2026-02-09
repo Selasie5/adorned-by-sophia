@@ -49,7 +49,7 @@ export const ToastContainer: React.FC = () => {
             <div className="flex justify-start items-center">
               <div className="text-sm font-medium">{it.type === 'success' ? (
                 <>
-                  <CheckCircleIcon className="w-5 h-5 text-green-600 inline-block mr-1" />
+                  <CheckCircleIcon className="w-5 h-5 text-green-700 inline-block mr-1" />
                 </>
               ) : it.type === 'warning' ? (
                 <>
@@ -57,7 +57,7 @@ export const ToastContainer: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <ExclamationCircleIcon className="w-5 h-5 text-rose-600 inline-block mr-1" />
+                  <ExclamationCircleIcon className="w-5 h-5 text-green-700 inline-block mr-1" />
                 </>
               )}</div>
               <div className="text-[13px] text-gray-700">{it.message}</div>
