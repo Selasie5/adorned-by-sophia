@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "@/app/components/layout/Header";
 import { useQuery, useLazyQuery } from "@apollo/client/react";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
@@ -43,17 +43,16 @@ const CustomersPage = () => {
     },
   });
 
-  const [getCustomerById, { loading: detailLoading }] = useLazyQuery<GetCustomerByIdData>(
-    GET_CUSTOMER_BY_ID,
-    {
-      onCompleted: (data) => {
-        if (data.getCustomerById.success) {
-          setSelectedCustomer(data.getCustomerById.data);
-          setIsModalOpen(true);
-        }
-      },
-    }
+  const [getCustomerById, { loading: detailLoading, data: customerData }] = useLazyQuery<GetCustomerByIdData>(
+    GET_CUSTOMER_BY_ID
   );
+
+  useEffect(() => {
+    if (customerData?.getCustomerById?.success) {
+      setSelectedCustomer(customerData.getCustomerById.data);
+      setIsModalOpen(true);
+    }
+  }, [customerData]);
 
   const customers = data?.getCustomers?.data || [];
 

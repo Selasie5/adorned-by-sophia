@@ -43,7 +43,7 @@ const ResetPasswordPage = () => {
   };
 
   if (token === null) {
-    return null; // or loading spinner
+    return null; 
   }
 
   if (!token) {

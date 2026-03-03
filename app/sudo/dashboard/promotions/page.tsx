@@ -43,7 +43,7 @@ const PromotionsPage = () => {
   });
 
   const [deletePromotion, { loading: deleteLoading }] = useMutation(DELETE_PROMOTION, {
-    onCompleted: (data) => {
+    onCompleted: (data:any) => {
       if (data.deletePromotion.success) {
         showToast("Promotion deleted", "success");
         refetch();
