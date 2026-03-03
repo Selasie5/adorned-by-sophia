@@ -29,7 +29,7 @@ const Alert = ({
   if (!isOpen) return null;
 
   const variantStyles = {
-    danger: 'bg-rose-600 hover:bg-rose-700',
+    danger: 'bg-green-700 hover:bg-rose-700',
     warning: 'bg-yellow-600 hover:bg-yellow-700',
     info: 'bg-blue-600 hover:bg-blue-700',
   };

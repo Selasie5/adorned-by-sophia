@@ -48,14 +48,14 @@ const Header = ({ title, breadCrumbs, actions, className = "", showSearch = fals
             <input
               type="text"
               placeholder="Search..."
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent w-64"
+              className="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent w-64"
             />
           </div>
         )}
 
         <button className="relative p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
           <BellIcon className="w-5 h-5" />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-rose-500 rounded-full"></span>
+          <span className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full"></span>
         </button>
 
         {actions && <div className="flex items-center gap-2">{actions}</div>}

@@ -42,7 +42,7 @@ const SelectInput = ({
         name={name}
         value={value}
         onChange={(e) => onChange?.(e.target.value)}
-        className={`w-full px-4 py-3 pr-10 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent appearance-none sudo ${className}`}
+        className={`w-full px-4 py-3 pr-10 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none sudo ${className}`}
       >
         <option value="" disabled>
           {placeholder}
