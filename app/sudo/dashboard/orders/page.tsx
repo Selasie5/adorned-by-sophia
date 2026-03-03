@@ -51,21 +51,17 @@ const OrdersPage = () => {
   });
 
   const [getOrderById, { loading: detailLoading }] = useLazyQuery<GetOrderByIdData>(
-    GET_ORDER_BY_ID,
-    {
-      onCompleted: (result) => {
-        if (result?.getOrderById?.success) {
-          setSelectedOrder(result.getOrderById.data);
-          setIsModalOpen(true);
-        }
-      },
-    }
+    GET_ORDER_BY_ID
   );
 
   const orders = data?.getOrders?.data || [];
 
-  const handleView = (order: Order) => {
-    getOrderById({ variables: { id: order.id } });
+  const handleView = async (order: Order) => {
+    const { data: result } = await getOrderById({ variables: { id: order.id } });
+    if (result?.getOrderById?.success) {
+      setSelectedOrder(result.getOrderById.data);
+      setIsModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {
