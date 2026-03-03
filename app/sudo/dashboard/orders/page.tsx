@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header from "@/app/components/layout/Header";
 import { useQuery, useLazyQuery } from "@apollo/client/react";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
@@ -50,16 +50,17 @@ const OrdersPage = () => {
     },
   });
 
-  const [getOrderById, { loading: detailLoading, data: orderData }] = useLazyQuery<GetOrderByIdData>(
-    GET_ORDER_BY_ID
-  );
-
-  useEffect(() => {
-    if (orderData?.getOrderById?.success) {
-      setSelectedOrder(orderData.getOrderById.data);
-      setIsModalOpen(true);
+  const [getOrderById, { loading: detailLoading }] = useLazyQuery<GetOrderByIdData>(
+    GET_ORDER_BY_ID,
+    {
+      onCompleted: (result) => {
+        if (result?.getOrderById?.success) {
+          setSelectedOrder(result.getOrderById.data);
+          setIsModalOpen(true);
+        }
+      },
     }
-  }, [orderData]);
+  );
 
   const orders = data?.getOrders?.data || [];
 

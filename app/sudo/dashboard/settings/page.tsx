@@ -11,7 +11,6 @@ import { GET_STORE_SETTINGS, UPDATE_STORE_SETTINGS } from "@/app/apollo/queries"
 import Button from "@/app/components/core/ui/button";
 import Input from "@/app/components/core/ui/input";
 import { showToast } from "@/app/components/core/ui/toast";
-import Link from "next/link";
 import Loader from "@/app/components/core/ui/loader";
 
 const GET_LOGIN_ACTIVITY = gql`
@@ -139,6 +138,7 @@ const SettingsPage = () => {
     },
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const _accessibleLinks = _settingsLinks.filter((link) =>
     link.roles.includes(admin?.role || "")
   );
