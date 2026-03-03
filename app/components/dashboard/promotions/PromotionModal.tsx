@@ -43,7 +43,7 @@ const PromotionModal = ({
     isActive: true,
   });
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (mode === "edit" && promotion) {
       setFormData({
@@ -77,6 +77,7 @@ const PromotionModal = ({
       });
     }
   }, [mode, promotion, isOpen]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const [createPromotion, { loading: createLoading }] = useMutation(CREATE_PROMOTION, {
     onCompleted: (responseData) => {

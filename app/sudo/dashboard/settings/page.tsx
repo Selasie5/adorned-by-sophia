@@ -107,10 +107,11 @@ const SettingsPage = () => {
 
   const [formData, setFormData] = useState<StoreSettings>(defaultFormData);
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setFormData(defaultFormData);
   }, [defaultFormData]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const activities = loginData?.getLoginActivity || [];
 

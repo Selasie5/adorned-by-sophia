@@ -40,7 +40,7 @@ const ShippingRateModal = ({
     isActive: true,
   });
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (mode === "edit" && rate) {
       setFormData({
@@ -64,6 +64,7 @@ const ShippingRateModal = ({
       });
     }
   }, [mode, rate, isOpen]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const [createShippingRate, { loading: createLoading }] = useMutation(CREATE_SHIPPING_RATE, {
     onCompleted: (responseData) => {
