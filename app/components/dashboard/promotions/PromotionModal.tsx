@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Modal from "@/app/components/core/ui/Modal";
 import Button from "@/app/components/core/ui/button";
 import SelectInput from "@/app/components/core/ui/SelectInput";
@@ -29,23 +29,9 @@ const PromotionModal = ({
   mode,
   onRefetch,
 }: PromotionModalProps) => {
-  const [formData, setFormData] = useState({
-    code: "",
-    description: "",
-    discountType: "PERCENTAGE",
-    discountValue: 0,
-    minimumOrderAmount: 0,
-    maximumDiscount: 0,
-    usageLimit: 0,
-    perCustomerLimit: 1,
-    validFrom: "",
-    validUntil: "",
-    isActive: true,
-  });
-
-  useEffect(() => {
+  const initialFormData = useMemo(() => {
     if (mode === "edit" && promotion) {
-      setFormData({
+      return {
         code: promotion.code,
         description: promotion.description || "",
         discountType: promotion.discountType,
@@ -57,25 +43,29 @@ const PromotionModal = ({
         validFrom: new Date(parseInt(promotion.validFrom)).toISOString().split("T")[0],
         validUntil: new Date(parseInt(promotion.validUntil)).toISOString().split("T")[0],
         isActive: promotion.isActive,
-      });
-    } else {
-      const today = new Date().toISOString().split("T")[0];
-      const nextMonth = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
-      setFormData({
-        code: "",
-        description: "",
-        discountType: "PERCENTAGE",
-        discountValue: 0,
-        minimumOrderAmount: 0,
-        maximumDiscount: 0,
-        usageLimit: 0,
-        perCustomerLimit: 1,
-        validFrom: today,
-        validUntil: nextMonth,
-        isActive: true,
-      });
+      };
     }
-  }, [mode, promotion, isOpen]);
+    const today = new Date().toISOString().split("T")[0];
+    const nextMonth = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+    return {
+      code: "",
+      description: "",
+      discountType: "PERCENTAGE",
+      discountValue: 0,
+      minimumOrderAmount: 0,
+      maximumDiscount: 0,
+      usageLimit: 0,
+      perCustomerLimit: 1,
+      validFrom: today,
+      validUntil: nextMonth,
+      isActive: true,
+    };
+  }, [mode, promotion]);
+
+  const [formData, setFormData] = useState(initialFormData);
+
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { setFormData(initialFormData); }, [initialFormData]);
 
   const [createPromotion, { loading: createLoading }] = useMutation(CREATE_PROMOTION, {
     onCompleted: (responseData) => {

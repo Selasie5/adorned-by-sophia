@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header from "@/app/components/layout/Header";
 import { useQuery, useLazyQuery } from "@apollo/client/react";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
@@ -43,21 +43,18 @@ const CustomersPage = () => {
     },
   });
 
-  const [getCustomerById, { loading: detailLoading, data: customerData }] = useLazyQuery<GetCustomerByIdData>(
+  const [getCustomerById, { loading: detailLoading }] = useLazyQuery<GetCustomerByIdData>(
     GET_CUSTOMER_BY_ID
   );
 
-  useEffect(() => {
-    if (customerData?.getCustomerById?.success) {
-      setSelectedCustomer(customerData.getCustomerById.data);
-      setIsModalOpen(true);
-    }
-  }, [customerData]);
-
   const customers = data?.getCustomers?.data || [];
 
-  const handleView = (customer: Customer) => {
-    getCustomerById({ variables: { id: customer.id } });
+  const handleView = async (customer: Customer) => {
+    const { data: result } = await getCustomerById({ variables: { id: customer.id } });
+    if (result?.getCustomerById?.success) {
+      setSelectedCustomer(result.getCustomerById.data);
+      setIsModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import DataTable, { TableColumn } from "@/app/components/core/ui/DataTable";
 
 export interface Promotion {
