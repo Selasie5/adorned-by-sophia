@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useMemo } from "react";
 import Header from "@/app/components/layout/Header";
 import { gql } from "@apollo/client";
 import { useMutation, useQuery } from "@apollo/client/react";
@@ -86,44 +86,31 @@ const SettingsPage = () => {
     },
   });
 
-  const [formData, setFormData] = useState<StoreSettings>({
-    storeName: "",
-    currency: "GHS",
-    taxRate: 0,
-    emailNotifications: {
-      orderConfirmation: true,
-      shippingUpdates: true,
-      lowStockAlerts: true,
-      lowStockThreshold: 10,
-    },
-    socialLinks: {
-      facebook: "",
-      instagram: "",
-      twitter: "",
-    },
-  });
+  const defaultFormData = useMemo<StoreSettings>(() => {
+    const s = settingsData?.getStoreSettings?.data;
+    return {
+      storeName: s?.storeName || "",
+      currency: s?.currency || "GHS",
+      taxRate: s?.taxRate || 0,
+      emailNotifications: {
+        orderConfirmation: s?.emailNotifications?.orderConfirmation ?? true,
+        shippingUpdates: s?.emailNotifications?.shippingUpdates ?? true,
+        lowStockAlerts: s?.emailNotifications?.lowStockAlerts ?? true,
+        lowStockThreshold: s?.emailNotifications?.lowStockThreshold ?? 10,
+      },
+      socialLinks: {
+        facebook: s?.socialLinks?.facebook || "",
+        instagram: s?.socialLinks?.instagram || "",
+        twitter: s?.socialLinks?.twitter || "",
+      },
+    };
+  }, [settingsData]);
+
+  const [formData, setFormData] = useState<StoreSettings>(defaultFormData);
 
   useEffect(() => {
-    if (settingsData?.getStoreSettings?.data) {
-      const s = settingsData.getStoreSettings.data;
-      setFormData({
-        storeName: s.storeName || "",
-        currency: s.currency || "GHS",
-        taxRate: s.taxRate || 0,
-        emailNotifications: {
-          orderConfirmation: s.emailNotifications?.orderConfirmation ?? true,
-          shippingUpdates: s.emailNotifications?.shippingUpdates ?? true,
-          lowStockAlerts: s.emailNotifications?.lowStockAlerts ?? true,
-          lowStockThreshold: s.emailNotifications?.lowStockThreshold ?? 10,
-        },
-        socialLinks: {
-          facebook: s.socialLinks?.facebook || "",
-          instagram: s.socialLinks?.instagram || "",
-          twitter: s.socialLinks?.twitter || "",
-        },
-      });
-    }
-  }, [settingsData]);
+    setFormData(defaultFormData);
+  }, [defaultFormData]);
 
   const activities = loginData?.getLoginActivity || [];
 
@@ -135,7 +122,7 @@ const SettingsPage = () => {
     });
   };
 
-  const settingsLinks = [
+  const _settingsLinks = [
     {
       title: "Admin Management",
       description: "Manage admins, create new accounts, and assign roles",
@@ -152,7 +139,7 @@ const SettingsPage = () => {
     },
   ];
 
-  const accessibleLinks = settingsLinks.filter((link) =>
+  const _accessibleLinks = _settingsLinks.filter((link) =>
     link.roles.includes(admin?.role || "")
   );
 
