@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "@/app/components/core/ui/Modal";
 import Button from "@/app/components/core/ui/button";
 import SelectInput from "@/app/components/core/ui/SelectInput";
@@ -30,9 +30,20 @@ const ShippingRateModal = ({
   mode,
   onRefetch,
 }: ShippingRateModalProps) => {
-  const initialFormData = useMemo(() => {
+  const [formData, setFormData] = useState({
+    name: "",
+    zone: "NATIONAL",
+    countries: "",
+    flatRate: 0,
+    estimatedDaysMin: 1,
+    estimatedDaysMax: 5,
+    isActive: true,
+  });
+
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => {
     if (mode === "edit" && rate) {
-      return {
+      setFormData({
         name: rate.name,
         zone: rate.zone,
         countries: rate.countries.join(", "),
@@ -40,23 +51,19 @@ const ShippingRateModal = ({
         estimatedDaysMin: rate.estimatedDays.min,
         estimatedDaysMax: rate.estimatedDays.max,
         isActive: rate.isActive,
-      };
+      });
+    } else {
+      setFormData({
+        name: "",
+        zone: "NATIONAL",
+        countries: "Ghana",
+        flatRate: 0,
+        estimatedDaysMin: 1,
+        estimatedDaysMax: 5,
+        isActive: true,
+      });
     }
-    return {
-      name: "",
-      zone: "NATIONAL",
-      countries: "Ghana",
-      flatRate: 0,
-      estimatedDaysMin: 1,
-      estimatedDaysMax: 5,
-      isActive: true,
-    };
-  }, [mode, rate]);
-
-  const [formData, setFormData] = useState(initialFormData);
-
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => { setFormData(initialFormData); }, [initialFormData]);
+  }, [mode, rate, isOpen]);
 
   const [createShippingRate, { loading: createLoading }] = useMutation(CREATE_SHIPPING_RATE, {
     onCompleted: (responseData) => {

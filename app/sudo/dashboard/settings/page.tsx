@@ -107,6 +107,7 @@ const SettingsPage = () => {
 
   const [formData, setFormData] = useState<StoreSettings>(defaultFormData);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
     setFormData(defaultFormData);
   }, [defaultFormData]);
