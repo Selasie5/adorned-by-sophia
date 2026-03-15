@@ -9,7 +9,7 @@ export interface Admin {
   email: string;
   firstName: string;
   lastName: string;
-  
+
   role: "SUPER_ADMIN" | "ADMIN" | "MANAGER";
   isActive: boolean;
   twoFactorEnabled: boolean;
@@ -31,9 +31,9 @@ interface AdminsTableProps {
 
 const getRoleBadge = (role: Admin["role"]) => {
   const roleStyles: Record<Admin["role"], string> = {
-    SUPER_ADMIN: "bg-purple-100 text-purple-700 border-purple-200",
-    ADMIN: "bg-blue-100 text-blue-700 border-blue-200",
-    MANAGER: "bg-green-100 text-green-700 border-green-200",
+    SUPER_ADMIN: "bg-gray-100 text-black border-gray-200",
+    ADMIN: "bg-gray-100 text-black border-gray-200",
+    MANAGER: "bg-gray-100 text-black border-gray-200",
   };
 
   const roleLabels = {
@@ -181,7 +181,7 @@ const AdminsTable = ({
           >
             <PencilIcon className="w-4 h-4" />
           </button>
-          {row.id !== currentUserId &&  currentUserRole === "SUPER_ADMIN" && (
+          {row.id !== currentUserId && currentUserRole === "SUPER_ADMIN" && (
             <button
               onClick={(e) => {
                 e.stopPropagation();

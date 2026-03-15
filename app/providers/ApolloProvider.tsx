@@ -5,8 +5,8 @@ import { ApolloProvider } from '@apollo/client/react';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
 
-const REFRESH_TOKEN = gql`mutation RefreshToken($refreshToken: String!) {
-  refreshToken(refreshToken: $refreshToken) {
+const REFRESH_TOKEN = gql`mutation RefreshToken {
+  refreshToken {
     accessToken
     admin {
       createdAt
