@@ -7,6 +7,8 @@ import { useMutation } from "@apollo/client/react";
 import * as Yup from "yup";
 import { FingerPrintIcon } from "@heroicons/react/24/solid";
 import { gql } from "@apollo/client";
+import { showToast } from "../components/core/ui/toast";
+import { useRouter } from "next/navigation";
 
 const ResetPasswordPage = () => {
   const [token] = useState<string | null>(() => {
@@ -29,7 +31,16 @@ const ResetPasswordPage = () => {
     }
   `;
 
-  const [resetPassword, { loading }] = useMutation(RESET_PASSWORD);
+  const router = useRouter();
+  const [resetPassword, { loading }] = useMutation(RESET_PASSWORD, {
+    onCompleted: () => {
+      showToast("Password reset successfully. Please login with your new password.", "success");
+      setTimeout(() => router.push("/sudo/auth"), 2000);
+    },
+    onError: (error) => {
+      showToast(error.message, "error");
+    },
+  });
 
   const handleSubmit = (values: { newPassword: string }) => {
     if (!token) return;

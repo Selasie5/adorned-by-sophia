@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client/react'
 import { gql } from '@apollo/client'
 import React from 'react'
 import * as Yup from 'yup'
+import { showToast } from '@/app/components/core/ui/toast'
 
 const ForgotPasswordPage = () => {
   const emailValidationSchema = Yup.object().shape({
@@ -18,11 +19,11 @@ const ForgotPasswordPage = () => {
   `
   
   const [handleSubmit, { loading }] = useMutation(REQUEST_PASSWORD_RESET, {
-    onCompleted: (responseData) => {
-      console.log('Password reset link sent:', responseData);
+    onCompleted: () => {
+      showToast('If an account exists with that email, a reset link has been sent.', 'success');
     },
     onError: (err) => {
-      console.error('Error sending password reset link:', err);
+      showToast(err.message, 'error');
     }
   }
   )
